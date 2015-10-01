@@ -1,0 +1,5 @@
+INDEX VERSION 1.127+E:\Slavik\GitProject\Java\.metadata\.plugins\org.eclipse.jdt.core
+2108730276.index
+2841341665.index
+2634676890.index
+3429284373.index
