@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="291.0" prefWidth="573.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="services.view.MainWindowController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#979b9e" height="367.0" opacity="0.48" stroke="BLACK" strokeType="INSIDE" width="671.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="48.0" layoutX="11.0" layoutY="15.0" opacity="0.29" stroke="BLACK" strokeType="INSIDE" width="647.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff4a1f" height="54.0" layoutX="354.0" layoutY="299.0" opacity="0.29" stroke="BLACK" strokeType="INSIDE" width="306.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fff2d" height="214.0" layoutX="10.0" layoutY="73.0" opacity="0.29" stroke="BLACK" strokeType="INSIDE" width="650.0" />
+      
+      <TextField fx:id="adrressCity" layoutX="222.0" layoutY="31.0" prefHeight="25.0" prefWidth="158.0" />
+      <TextField fx:id="adrressStreet" layoutX="392.0" layoutY="31.0" prefHeight="25.0" prefWidth="119.0" />
+      <TextField fx:id="adrressBuilding" layoutX="522.0" layoutY="31.0" prefHeight="25.0" prefWidth="57.0" />
+      <TextField fx:id="adrressFlat" layoutX="592.0" layoutY="31.0" prefHeight="25.0" prefWidth="57.0" />
+      
+      <CheckBox fx:id="gazWithMeter" layoutX="57.0" layoutY="100.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="90.0" text="По счетчику">
+         <font>
+            <Font size="11.0" />
+         </font></CheckBox>
+      <TextField fx:id="gazAccaunt" layoutX="155.0" layoutY="96.0" prefHeight="25.0" prefWidth="111.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="gazTariff" layoutX="279.0" layoutY="96.0" prefHeight="25.0" prefWidth="79.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="gazCurrentTestimonies" layoutX="369.0" layoutY="96.0" prefHeight="25.0" prefWidth="66.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="gazPreveriusTestimonies" layoutX="451.0" layoutY="96.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="gazDifferencInTestimonies" editable="false" layoutX="520.0" layoutY="96.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="gazSum" editable="false" layoutX="591.0" layoutY="96.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <CheckBox fx:id="gazWithoutMeter" layoutX="57.0" layoutY="132.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="90.0" text="Без счетчика">
+         <font>
+            <Font size="11.0" />
+         </font></CheckBox>
+      <TextField fx:id="gazWithoutMeterAccaunt" layoutX="156.0" layoutY="127.0" prefHeight="25.0" prefWidth="111.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="gazWithoutMeterTariff" layoutX="280.0" layoutY="127.0" prefHeight="25.0" prefWidth="79.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="gazWithoutMeterSum" editable="false" layoutX="592.0" layoutY="127.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      
+      <CheckBox fx:id="waterWithMeter" layoutX="57.0" layoutY="164.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="90.0" text="По счетчику">
+         <font>
+            <Font size="11.0" />
+         </font></CheckBox>
+      <TextField fx:id="waterAccaunt" layoutX="156.0" layoutY="159.0" prefHeight="25.0" prefWidth="111.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="waterTariff" layoutX="280.0" layoutY="159.0" prefHeight="25.0" prefWidth="79.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="waterCurrentTestimonies" layoutX="371.0" layoutY="159.0" prefHeight="25.0" prefWidth="66.0" />
+      <TextField fx:id="waterPreveriusTestimonies" layoutX="452.0" layoutY="159.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="waterDifferencInTestimonies" editable="false" layoutX="523.0" layoutY="159.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="waterSum" editable="false" layoutX="593.0" layoutY="159.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <CheckBox fx:id="waterWithoutMeter" layoutX="57.0" layoutY="195.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="90.0" text="Без счетчика">
+         <font>
+            <Font size="11.0" />
+         </font></CheckBox>
+      <TextField fx:id="waterWithoutMeterAccaunt" layoutX="155.0" layoutY="190.0" prefHeight="25.0" prefWidth="111.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="waterWithoutMeterTariff" layoutX="279.0" layoutY="190.0" prefHeight="25.0" prefWidth="79.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="waterWithoutMeterSum" editable="false" layoutX="592.0" layoutY="190.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      
+      <TextField fx:id="electricityAccaunt" layoutX="156.0" layoutY="222.0" prefHeight="25.0" prefWidth="111.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="electricityTariff" layoutX="280.0" layoutY="222.0" prefHeight="25.0" prefWidth="38.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="electricityTariff2" layoutX="320.0" layoutY="222.0" prefHeight="25.0" prefWidth="38.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="electricityCurrentTestimonies" layoutX="371.0" layoutY="222.0" prefHeight="25.0" prefWidth="66.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="electricityPreveriusTestimonies" layoutX="452.0" layoutY="222.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="electricityDifferencInTestimonies" editable="false" layoutX="523.0" layoutY="222.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="electricitySum" editable="false" layoutX="593.0" layoutY="222.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      
+      
+      
+      <TextField fx:id="housingOfficeAccaunt" layoutX="156.0" layoutY="255.0" prefHeight="25.0" prefWidth="111.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="housingOfficeTariff" layoutX="280.0" layoutY="255.0" prefHeight="25.0" prefWidth="79.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      <TextField fx:id="housingOfficeSum" editable="false" layoutX="594.0" layoutY="255.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      
+      <Button fx:id="buttonSave" layoutX="359.0" layoutY="315.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Сохранить">
+         <font>
+            <Font size="11.0" />
+         </font></Button>
+      <Button fx:id="buttonClear" layoutX="439.0" layoutY="315.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="66.0" text="Очистить">
+         <font>
+            <Font size="11.0" />
+         </font></Button>
+      <Button fx:id="buttonCalculation" layoutX="512.0" layoutY="315.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Расчитать">
+         <font>
+            <Font size="11.0" />
+         </font></Button>
+      <TextField fx:id="totalSum" editable="false" layoutX="592.0" layoutY="315.0" prefHeight="25.0" prefWidth="57.0">
+         <font>
+            <Font size="10.0" />
+         </font></TextField>
+      
+      <Label layoutX="287.0" layoutY="15.0" text="Город">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="534.0" layoutY="15.0" text="Дом">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="597.0" layoutY="15.0" text="Квартира">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="446.0" layoutY="74.0" text="Предыдущие">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="303.0" layoutY="74.0" text="Тариф">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="603.0" layoutY="299.0" text="Всего">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="21.0" layoutY="117.0" text="Газ">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="21.0" layoutY="225.0" prefHeight="17.0" prefWidth="46.0" text="Эл.эн.">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="20.0" layoutY="181.0" text="Вода">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="378.0" layoutY="74.0" text="Текущие ">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="601.0" layoutY="74.0" text="Сумма">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="527.0" layoutY="74.0" text="Разница">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="167.0" layoutY="74.0" text="Расчетный счет">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="21.0" layoutY="258.0" text="ЖКХ">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label layoutX="432.0" layoutY="15.0" text="Улица">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      
+      
+      
+            
+      
+      <Separator layoutX="11.0" layoutY="154.0" prefHeight="3.0" prefWidth="647.0" />
+      <Separator layoutX="12.0" layoutY="217.0" prefHeight="3.0" prefWidth="647.0" />
+      <Separator layoutX="12.0" layoutY="250.0" prefHeight="3.0" prefWidth="647.0" />
+      <Button fx:id="buttonOpenAddress" layoutX="16.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Выбрать существующий адрес" />
+      
+   </children>
+</AnchorPane>
