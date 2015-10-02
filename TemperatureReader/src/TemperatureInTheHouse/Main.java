@@ -59,7 +59,7 @@ public class Main extends Application {
 	
 	public void showMainOverview(){
 		try {
-		    	FXMLLoader loader = new FXMLLoader();
+		   	FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/MainWindowLayout.fxml"));
 		
 			AnchorPane overview = (AnchorPane) loader.load();
@@ -99,7 +99,6 @@ public class Main extends Application {
 		    e.printStackTrace();
 		}
 	    }
-	    System.out.println(temp.size());
 	    return temp;
 	}
 	public TemperatureInTheHouse getCurrentValueOfTheData(){
@@ -126,6 +125,7 @@ public class Main extends Application {
 		    e.printStackTrace();
 		}
 	    }
+	    catchWrongData(hour);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -142,12 +142,17 @@ public class Main extends Application {
 		    e.printStackTrace();
 		}
 	    }
+	    catchWrongData(day);
 	}
 	
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation") 
 	public void getPreviousHour(){
 		TemperatureInTheHouse t;
-		--displayingHour;
+		--displayingHour;			//дикремент текущего времени
+		if(displayingHour == 0 || displayingHour == -1){			//если показываемый час равен 0 часов или (-1) устанвливаем время 23:00
+			displayingHour =23 ;
+			getPreviousDay();
+		}
 	    hour = new ArrayList<TemperatureInTheHouse>();
 	    for (int i = 0; i < doc.getCountOfLines() ; i++) {
 		try {
@@ -162,12 +167,16 @@ public class Main extends Application {
 		    e.printStackTrace();
 		}
 	    }
+	    catchWrongData(hour);
 	}
 	
 	@SuppressWarnings("deprecation")
 	public void getNextHour(){
 		TemperatureInTheHouse t;
-		++displayingHour;
+		if(++displayingHour == 24){
+			displayingHour = 0;
+			getNextDay();
+		}
 	    hour = new ArrayList<TemperatureInTheHouse>();
 	    for (int i = 0; i < doc.getCountOfLines() ; i++) {
 		try {
@@ -182,13 +191,13 @@ public class Main extends Application {
 		    e.printStackTrace();
 		}
 	    }
+	    catchWrongData(hour);
 	}
 	
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation")	
 	public void getPreviousDay(){
 		TemperatureInTheHouse t;
 		displayingDay = new Date(displayingDay.getYear(),displayingDay.getMonth(),displayingDay.getDate()-1);
-		System.out.println(displayingDay);
 	    day = new ArrayList<TemperatureInTheHouse>();
 	    for (int i = 0; i < doc.getCountOfLines() ; i++) {
 		try {
@@ -205,14 +214,13 @@ public class Main extends Application {
 		    e.printStackTrace();
 		}
 	    }
-	    System.out.println(day.size());
+	    catchWrongData(day);
 	}
 	
 	@SuppressWarnings("deprecation")
 	public void getNextDay(){
 		TemperatureInTheHouse t;
 		displayingDay = new Date(displayingDay.getYear(),displayingDay.getMonth(),displayingDay.getDate() + 1);
-		System.out.println(displayingDay);
 	    day = new ArrayList<TemperatureInTheHouse>();
 	    for (int i = 0; i < doc.getCountOfLines() ; i++) {
 		try {
@@ -224,12 +232,14 @@ public class Main extends Application {
 		    	if(t.getCurrentDate().getDate() == displayingDay.getDate() && i%10 == 0){
 					day.add(t);
 				}
+		    	
+		    	
 		    }
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
 	    }
-	    System.out.println(day.size());
+	    catchWrongData(day);
 	}
 	
 	public ArrayList<TemperatureInTheHouse> getDay(){
@@ -259,6 +269,151 @@ public class Main extends Application {
 		launch(args);
 	}
 	
+	public void catchWrongData(ArrayList<TemperatureInTheHouse> array){ //если значение с датчика некорректны(-127(не успел ответить)
+		ArrayList<Double> temp = new ArrayList<Double>();				//или +85(нет питания на датчик)) заменить на среднее ариф. списка
+		
+	    double averageHall = 0.0D;
+	    double averageChildRoom = 0.0D;
+	    double averageKitchen = 0.0D;
+	    double averageBadRoom = 0.0D;
+	    double averageHallWay = 0.0D;
+	    double averagePantry = 0.0D;                  //кладовая
+	    double averageBalcony_1 = 0.0D;
+	    double averageBalcony_2 = 0.0D;
+	    double averageOuterForest = 0.0D;
+	    double averageOuterYard = 0.0D;
+	    
+		for (int i = 0; i < array.size(); i++) {
+			if( array.get(i).getHall() > -50 && array.get(i).getHall() < 70){
+				temp.add(array.get(i).getHall());
+			}
+		}
+		averageHall = getAverage(temp);
+		temp = new ArrayList<Double>();
+		
+		for (int i = 0; i < array.size(); i++) {
+			if( array.get(i).getChildRoom() > -50 && array.get(i).getChildRoom() < 70){
+				temp.add(array.get(i).getChildRoom());
+			}
+		}
+		averageChildRoom = getAverage(temp);
+		temp = new ArrayList<Double>();
+		
+		for (int i = 0; i < array.size(); i++) {
+			if( array.get(i).getKitchen() > -50 && array.get(i).getKitchen() < 70){
+				temp.add(array.get(i).getKitchen());
+			}
+		}
+		averageKitchen = getAverage(temp);
+		temp = new ArrayList<Double>();
+		
+		for (int i = 0; i < array.size(); i++) {
+			if( array.get(i).getBadRoom() > -50 && array.get(i).getBadRoom() < 70){
+				temp.add(array.get(i).getBadRoom());
+			}
+		}
+		averageBadRoom = getAverage(temp);
+		temp = new ArrayList<Double>();
+		
+		for (int i = 0; i < array.size(); i++) {
+			if( array.get(i).getHallWay() > -50 && array.get(i).getHallWay() < 70){
+				temp.add(array.get(i).getHallWay());
+			}
+		}
+		averageHallWay = getAverage(temp);
+		temp = new ArrayList<Double>();
+		
+		for (int i = 0; i < array.size(); i++) {
+			if( array.get(i).getPantry() > -50 && array.get(i).getPantry() < 70){
+				temp.add(array.get(i).getPantry());
+			}
+		}
+		averagePantry = getAverage(temp);
+		temp = new ArrayList<Double>();
+		
+		for (int i = 0; i < array.size(); i++) {
+			if( array.get(i).getBalcony_1() > -50 && array.get(i).getBalcony_1() < 70){
+				temp.add(array.get(i).getBalcony_1());
+			}
+		}
+		averageBalcony_1 = getAverage(temp);
+		temp = new ArrayList<Double>();
+		
+		for (int i = 0; i < array.size(); i++) {
+			if( array.get(i).getBalcony_2() > -50 && array.get(i).getBalcony_2() < 70){
+				temp.add(array.get(i).getBalcony_2());
+			}
+		}
+		averageBalcony_2 = getAverage(temp);
+		temp = new ArrayList<Double>();
+		
+		for (int i = 0; i < array.size(); i++) {
+			if( array.get(i).getOuterYard() > -50 && array.get(i).getOuterYard() < 70){
+				temp.add(array.get(i).getOuterYard());
+			}
+		}
+		averageOuterYard = getAverage(temp);
+		temp = new ArrayList<Double>();
+		
+		for (int i = 0; i < array.size(); i++) {
+			if( array.get(i).getOuterForest() > -50 && array.get(i).getOuterForest() < 70){
+				System.out.println(array.get(i).getOuterForest());
+				temp.add(array.get(i).getOuterForest());
+			}
+		}
+		averageOuterForest = getAverage(temp);
+//---------------------Заменяем все некорректные значения средним арифметическим за заданный период--------------
+		for (int i = 0; i < array.size(); i++) {
+			if( array.get(i).getHall() < -50 || array.get(i).getHall() > 70){
+				array.get(i).setHall(averageHall);
+			}
+			
+			if( array.get(i).getChildRoom() < -50 || array.get(i).getChildRoom() > 70){
+				array.get(i).setChildRoom(averageChildRoom);
+			}
+			
+			if( array.get(i).getKitchen() < -50 || array.get(i).getKitchen() > 70){
+				array.get(i).setKitchen(averageKitchen);
+			}
+			
+			if( array.get(i).getBadRoom() < -50 || array.get(i).getBadRoom() > 70){
+				array.get(i).setBadRoom(averageBadRoom);
+			}
+			
+			if( array.get(i).getHallWay() < -50 || array.get(i).getHallWay() > 70){
+				array.get(i).setHallWay(averageHallWay);
+			}
+			
+			if( array.get(i).getPantry() < -50 || array.get(i).getPantry() > 70){
+				array.get(i).setPantry(averagePantry);
+			}
+			
+			if( array.get(i).getBalcony_1() < -50 || array.get(i).getBalcony_1() > 70){
+				array.get(i).setBalcony_1(averageBalcony_1);
+			}
+			
+			if( array.get(i).getBalcony_2() < -50 || array.get(i).getBalcony_2() > 70){
+				array.get(i).setBalcony_2(averageBalcony_2);
+			}
+			
+			if( array.get(i).getOuterYard() < -50 || array.get(i).getOuterYard() > 70){
+				array.get(i).setOuterYard(averageOuterYard);
+			}
+			
+			if( array.get(i).getOuterForest() < -50 || array.get(i).getOuterForest() > 70){
+				array.get(i).setOuterForest(averageOuterForest);
+			}
+		}
+	}
+	
+	public double getAverage(ArrayList<Double> temp){
+		double total = 0.0D;
+		for (int i = 0; i < temp.size(); i++) {
+			total += temp.get(i);
+		}
+		
+		return total/(double)temp.size();
+	}
 	
 	public Main refreshAllData(){ 
 		System.gc();

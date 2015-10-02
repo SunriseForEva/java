@@ -233,9 +233,9 @@ public class MainWindowController {
 		});
 		
 		forwardSecondTab = new Button(">");
-		forwardSecondTab.setLayoutX(67);
+		forwardSecondTab.setLayoutX(48);
 		forwardSecondTab.setLayoutY(475);
-		forwardSecondTab.setMinSize(25,26);
+		forwardSecondTab.setMinSize(35,26);
 		forwardSecondTab.setOnAction(new EventHandler<ActionEvent>() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -261,32 +261,32 @@ public class MainWindowController {
 			}
 		});
 		
-		pauseSecondTab = new Button("II");
-		pauseSecondTab.setLayoutX(38);
-		pauseSecondTab.setLayoutY(475);
-		pauseSecondTab.setMinSize(25,26);
+		pauseSecondTab = new Button("Обновить");
+		pauseSecondTab.setLayoutX(13);
+		pauseSecondTab.setLayoutY(445);
+		pauseSecondTab.setMinSize(70,25);
 		pauseSecondTab.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if(pause == false){
-					pause = true;
-					pauseThirdTab.setText("->");
-					pauseSecondTab.setText("->");
-					System.out.println(pause);
+				if(displayingOneHour == true){
+					System.gc();
+					main = main.refreshAllData();
+					showDisplayTemperatureOutside(main.getHour(),ONE_HOUR);
+					System.gc();
 				}
-				else{
-					pause = false;
-					pauseThirdTab.setText("II");
-					pauseSecondTab.setText("II");
-					System.out.println(pause);
+				if(displayingOneDay == true){
+					System.gc();
+					main = main.refreshAllData();
+					showDisplayTemperatureOutside(main.getDay(),ONE_HOUR);
+					System.gc();
 				}
 			}
 		});
 		
 		backwardSecondTab = new Button("<");
-		backwardSecondTab.setLayoutX(9);
+		backwardSecondTab.setLayoutX(12);
 		backwardSecondTab.setLayoutY(475);
-		backwardSecondTab.setMinSize(25,26);
+		backwardSecondTab.setMinSize(35,26);
 		backwardSecondTab.setOnAction(new EventHandler<ActionEvent>() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -384,9 +384,9 @@ public class MainWindowController {
 		});
 		
 		forwardThirdTab = new Button(">");
-		forwardThirdTab.setLayoutX(67);
+		forwardThirdTab.setLayoutX(48);
 		forwardThirdTab.setLayoutY(475);
-		forwardThirdTab.setMinSize(25,26);
+		forwardThirdTab.setMinSize(35,26);
 		forwardThirdTab.setOnAction(new EventHandler<ActionEvent>() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -412,33 +412,33 @@ public class MainWindowController {
 			}
 		});
 //------------------------------------------------------------------------------
-		pauseThirdTab = new Button("II");
-		pauseThirdTab.setLayoutX(38);
-		pauseThirdTab.setLayoutY(475);
-		pauseThirdTab.setMinSize(25,26);
+		pauseThirdTab = new Button("Обновить");
+		pauseThirdTab.setLayoutX(13);
+		pauseThirdTab.setLayoutY(445);
+		pauseThirdTab.setMinSize(70,25);
 		pauseThirdTab.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				if(pause == false){
-					pause = true;
-					pauseThirdTab.setText("->");
-					pauseSecondTab.setText("->");
-					System.out.println(pause);
+				if(displayingOneHour == true){
+					System.gc();
+					main = main.refreshAllData();
+					showDisplayTemperatureInside(main.getHour(),ONE_HOUR);
+					System.gc();
 				}
-				else{
-					pause = false;
-					pauseThirdTab.setText("II");
-					pauseSecondTab.setText("II");
-					System.out.println(pause);
+				if(displayingOneDay == true){
+					System.gc();
+					main = main.refreshAllData();
+					showDisplayTemperatureInside(main.getDay(),ONE_HOUR);
+					System.gc();
 				}
 			}
 		});
 //------------------------------------------------------------------------------
 		backwardThirdTab = new Button("<");
-		backwardThirdTab.setLayoutX(9);
+		backwardThirdTab.setLayoutX(12);
 		backwardThirdTab.setLayoutY(475);
-		backwardThirdTab.setMinSize(25,26);
+		backwardThirdTab.setMinSize(35,26);
 		backwardThirdTab.setOnAction(new EventHandler<ActionEvent>() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -755,8 +755,10 @@ public class MainWindowController {
 	}
 	@SuppressWarnings("deprecation")
 	void activateForwardButtons(){
-		if((main.getDisplayHour() == main.getCurrentValueOfTheData().getCurrentDate().getHours() && displayingOneHour == true) ||
-				(main.getDisplayingDay().getDate() == main.getCurrentValueOfTheData().getCurrentDate().getDate() && displayingOneDay ==true))
+		if(((main.getDisplayHour() == main.getCurrentValueOfTheData().getCurrentDate().getHours()) && 
+				(main.getDisplayingDay().getDate() == main.getCurrentValueOfTheData().getCurrentDate().getDate()&& 
+				displayingOneHour == true) ||
+				(main.getDisplayingDay().getDate() == main.getCurrentValueOfTheData().getCurrentDate().getDate() && displayingOneDay ==true)))
 		{
 			forwardThirdTab.setDisable(true);
 			forwardSecondTab.setDisable(true);
@@ -780,6 +782,8 @@ public class MainWindowController {
 	        			public void run() {
 	        			    main = main.refreshAllData();
 	        			    setTemperature(main.getCurrentValueOfTheData());
+//	        			    showDisplayTemperatureInside(main.getHour(), ONE_HOUR);
+//	        			    showDisplayTemperatureOutside(main.getHour(),ONE_HOUR);
 	        			}
 	        	});
 			    } catch (InterruptedException e) {

@@ -16,8 +16,8 @@ import jxl.write.WriteException;
 public class CreateExcelDoc {
 
 	private Date currentDate;
-	private String currentFile = new String(/*"D://Database//DB.xls"*/"C://DB.xls");
-	private String tempFile = new String(/*"D://Database//tempDB.xls"*/"C://tempDB.xls");
+	private String currentFile = new String("D://Database//DB.xls"/*C://DB.xls"*/);
+	private String tempFile = new String("D://Database//tempDB.xls"/*"C://tempDB.xls"*/);
 	private File file;
 	private File temp;
 	private Workbook book;
