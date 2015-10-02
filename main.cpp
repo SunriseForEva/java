@@ -2,7 +2,6 @@
 int main (void)
 {
 	printf (“Hello world\n”);
-	puts (“Hello world”);
 	puts (“I am in repository”);
 	return 0;
 }
