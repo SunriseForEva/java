@@ -6,12 +6,17 @@ public class FirstTestClass {
 	// TODO Auto-generated method stub
 	Thread thread = new Thread(new ImplementRunnable());
 	thread.start();
+	thread.setPriority(Thread.NORM_PRIORITY);
 	
 	Thread thread1 = new Thread(new ImplementRunnable());
 	thread1.start();
+	thread1.setPriority(Thread.MIN_PRIORITY);
 	
 	Thread thread2 = new Thread(new ImplementRunnable());
 	thread2.start();
+	thread2.setPriority(Thread.MAX_PRIORITY);
+	
+	while(thread.isAlive() || thread1.isAlive() || thread2.isAlive());
 	
 	System.out.println("Goodbay:)");
     }
