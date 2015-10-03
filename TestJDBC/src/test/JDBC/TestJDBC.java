@@ -1,7 +1,7 @@
 package test.JDBC;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class TestJDBC {
 	static String date = new String("wsdas");
@@ -18,7 +18,7 @@ public class TestJDBC {
 	static float t_mainRoom ;
 	static float t_water ;
 
-	List<Object> lastRecord = new ArrayList();
+	Map<Integer,Object> map = new TreeMap<Integer, Object>();
 	
 	
     public static Connection con = null;
@@ -34,12 +34,12 @@ public class TestJDBC {
     	
     	
     	stmt = con.createStatement();
-    	ResultSet rs = stmt.executeQuery(requestLastRecord);
-    	getDataFromRequest(rs);
+    	ResultSet rsLastRec = stmt.executeQuery(requestLastRecord);
+    	getDataFromRequest(rsLastRec,map);
     	
     }
-	public void getDataFromRequest(ResultSet rs) throws SQLException { //к аргументам функции добавить карту(map)
-		while(rs.next()){
+	public void getDataFromRequest(ResultSet rs, Map<Integer, Object> map) throws SQLException { //к аргументам функции добавить карту(map)
+		for(int i = 0 ; rs.next() ; i++){
     		id = rs.getInt("ID");
     		date = rs.getString("currentTime");
     		t_balconyEast = rs.getFloat("t_balconyEast");
@@ -54,19 +54,19 @@ public class TestJDBC {
     		t_mainRoom  = rs.getFloat("t_mainRoom");
     		t_water = rs.getFloat("t_water");
     		
-    		lastRecord.add(id);   // вместо ArrayList использовать TreeMap
-    		lastRecord.add(date);
-    		lastRecord.add(t_balconyEast);
-    		lastRecord.add(t_bedroom);
-    		lastRecord.add(t_hall);
-    		lastRecord.add(t_balconyWest);
-    		lastRecord.add(t_childrenroom);
-    		lastRecord.add(t_kitchen);
-    		lastRecord.add(t_pantry);
-    		lastRecord.add(t_outerForest);
-    		lastRecord.add(t_outerYard);
-    		lastRecord.add(t_mainRoom);
-    		lastRecord.add(t_water);
+    		map.put(i, id);   // вместо ArrayList использовать TreeMap
+    		map.put(i,date);
+    		map.put(i,t_balconyEast);
+    		map.put(i,t_bedroom);
+    		map.put(i,t_hall);
+    		map.put(i,t_balconyWest);
+    		map.put(i,t_childrenroom);
+    		map.put(i,t_kitchen);
+    		map.put(i,t_pantry);
+    		map.put(i,t_outerForest);
+    		map.put(i,t_outerYard);
+    		map.put(i,t_mainRoom);
+    		map.put(i,t_water);
     	}
 	}
     void setConnection() throws SQLException{
