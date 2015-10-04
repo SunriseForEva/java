@@ -18,9 +18,18 @@ public class TestJDBC {
 	private ArrayList<Temperature> searchHourData = new ArrayList<Temperature>();
 	private ArrayList<Temperature> searchDayData = new ArrayList<Temperature>();
 	
+//	private String URL = "jdbc:mysql://178.219.93.93:3306/myDb";
+//	private String user = "sunrise4eva";
+//	private String password = "sunrisesql1982";
+	
+//	private String URL = "jdbc:mysql://31.129.67.21:3306/temperature";
+//	private String user = "slava";
+//	private String password = "slava7777777";
+	
 	private String URL = "jdbc:mysql://localhost/sunrise";
 	private String user = "sunrise";
 	private String password = "777";
+	
     private Connection con = null;
     private Statement stmt = null;
     
@@ -122,14 +131,25 @@ public class TestJDBC {
 	}
 	
     public static void main(String[] args) throws SQLException {
-		TestJDBC tj = new TestJDBC();
+    	double[] arr = new double[5];
     	
-		tj.setConnection();
-		tj.setLastRecord();
-		tj.setSearchDayData(getDateFromString("2015-09-27 00:00:00"));
-		tj.showAllRecordPerSearchingDey();    	
+    	for (int i = 0; i < 5 ; i++) {
+    		double begin = System.currentTimeMillis();
+    		
+        	TestJDBC tj = new TestJDBC();
+    		tj.setConnection();
+    		tj.setLastRecord();
+    		tj.setSearchDayData(getDateFromString("2015-10-01 00:00:00"));
+//    		tj.showAllRecordPerSearchingDey();    	
+
+    		double end = System.currentTimeMillis();
+    		arr[i] = (end-begin)/(double)1000;
+		}
     	
 		
+		for (double d : arr) {
+			System.out.print( d + " ");
+		}
     	
     }
 }
