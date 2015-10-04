@@ -1,93 +1,135 @@
 package test.JDBC;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 
 import test.JDBC.Temperature;
 
 import java.util.ArrayList;
 
 public class TestJDBC {
-	static String date = new String("wsdas");
-	static int id;
-	static float t_balconyEast ;
-	static float t_bedroom ;
-	static float t_hall ;
-	static float t_balconyWest ;
-	static float t_childrenroom ;
-	static float t_kitchen ;
-	static float t_pantry ;
-	static float t_outerForest ;
-	static float t_outerYard ;
-	static float t_mainRoom ;
-	static float t_water ;
-
-	ArrayList<Temperature> list = new ArrayList<Temperature>();
+	private ArrayList<Temperature> lastRecord = new ArrayList<Temperature>();
 	
+	private ArrayList<Temperature> currentHourData = new ArrayList<Temperature>();
+	private ArrayList<Temperature> currentDayData = new ArrayList<Temperature>();
 	
-    public static Connection con = null;
-    public static Statement stmt = null;
-    public static String request = "SELECT *FROM housestemperatures "+
-    "WHERE currentTime>'2015-10-2 12:00:01'&&"+
-    		"currentTime<'2015-10-2 13:00:01'";
+	private ArrayList<Temperature> searchHourData = new ArrayList<Temperature>();
+	private ArrayList<Temperature> searchDayData = new ArrayList<Temperature>();
+	
+	private String URL = "jdbc:mysql://localhost/sunrise";
+	private String user = "sunrise";
+	private String password = "777";
+    private Connection con = null;
+    private Statement stmt = null;
     
-    String requestLastRecord = "SELECT *FROM housestemperatures "+
+    Date currentDay = null ;
+
+    private String requestSearchDate = "SELECT *FROM housestemperatures "+
+    "WHERE DATE(currentTime)=";
+    private String requestLastRecord = "SELECT *FROM housestemperatures "+
     "ORDER BY id DESC LIMIT 1";
     
-    void getLastRecord() throws SQLException{
-    	
-    	
-    	stmt = con.createStatement();
-    	ResultSet rsLastRec = stmt.executeQuery(requestLastRecord);
-    	getDataFromRequest(rsLastRec,list);
-    	
-    }
-	public void getDataFromRequest(ResultSet rs, ArrayList<Temperature> listTemperature) throws SQLException { //к аргументам функции добавить карту(map)
-		while( rs.next() ){
-    		id = rs.getInt("ID");
-    		date = rs.getString("currentTime");
-    		t_balconyEast = rs.getFloat("t_balconyEast");
-    		t_bedroom = rs.getFloat("t_bedroom");
-    		t_hall = rs.getFloat("t_hall");
-    		t_balconyWest = rs.getFloat("t_balconyWest");
-    		t_childrenroom = rs.getFloat("t_childrenroom");
-    		t_kitchen = rs.getFloat("t_kitchen");
-    		t_pantry = rs.getFloat("t_pantry");
-    		t_outerForest = rs.getFloat("t_outerForest");
-    		t_outerYard = rs.getFloat("t_outerYard");
-    		t_mainRoom  = rs.getFloat("t_mainRoom");
-    		t_water = rs.getFloat("t_water");
-    		
-    		ArrayList<Object> record = new ArrayList<Object>();
-    		record.add(t_balconyWest);
-    		record.add(t_bedroom);
-    		record.add(t_mainRoom);
-    		record.add(t_balconyEast);
-    		record.add(t_childrenroom);
-    		record.add(t_hall);
-    		record.add(t_kitchen);
-    		record.add(t_outerYard);
-    		record.add(t_outerForest);
-    		record.add(t_water);
-    		record.add(t_pantry);
-    		
-    		listTemperature.add(new Temperature(record));
-    	}
-	}
-	private Date getDateFromString(String date){
-		
-		return null;
-	}
-    public void setConnection() throws SQLException{
+    /*Set connection to MySql server*/
+    public void setConnection() throws SQLException{ 
     	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-    	con = DriverManager.getConnection("jdbc:mysql://localhost/sunrise", "sunrise", "777");
+    	con = DriverManager.getConnection(URL, user, password);
     	if(con != null){
     	    System.out.println("Ok!");
     	}
+    	stmt = con.createStatement();
     }
     
     
+    private void setCurrentDayData() throws SQLException{
+/*Получаем строковое представление текущей даты(private Date currentDate) для формирования
+ *  SQL-запроса получающий из базы все сегодняшние(последие сутки в базе)значения*/
+    	ResultSet rsRecPerDay = stmt.executeQuery(requestSearchDate+"'"+getStingFromDate(currentDay)+"'");
+        getDataFromRequest(rsRecPerDay, currentDayData);
+    }
+    
+    private void setSearchDayData(Date searchingDate) throws SQLException{
+    	ResultSet rsRecPerDay = stmt.executeQuery(requestSearchDate+"'"+getStingFromDate(searchingDate)+"'");
+        getDataFromRequest(rsRecPerDay, searchDayData);
+    }
+    
+    /* Last record get from table and set current(date of last record)*/
+    private void setLastRecord() throws SQLException{ 
+    	ResultSet rsLastRec = stmt.executeQuery(requestLastRecord);
+    	getDataFromRequest(rsLastRec,lastRecord);
+    	currentDay = lastRecord.get(0).getCurrentDate();
+    }
+    
+    /*   all data read from request and put it into object Temperature */
+	private void getDataFromRequest(ResultSet rs, ArrayList<Temperature> listTemperature) throws SQLException { 
+		while( rs.next() ){   
+    		ArrayList<Object> record = new ArrayList<Object>();
+    		record.add(rs.getFloat("t_balconyWest"));
+    		record.add(rs.getFloat("t_bedroom"));
+    		record.add(rs.getFloat("t_mainRoom"));
+    		record.add(rs.getFloat("t_balconyEast"));
+    		record.add(rs.getFloat("t_childrenroom"));
+    		record.add(rs.getFloat("t_hall"));
+    		record.add(rs.getFloat("t_kitchen"));
+    		record.add(rs.getFloat("t_outerYard"));
+    		record.add(rs.getFloat("t_outerForest"));
+    		record.add(rs.getFloat("t_water"));
+    		record.add(rs.getFloat("t_pantry"));
+    		record.add(getDateFromString(rs.getString("currentTime")));
+    		listTemperature.add(new Temperature(record));
+    	}
+	}
+			
+	/*Take Date from String*/
+	private static Date getDateFromString(String d){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date temp = new Date();
+		try {
+			temp = sdf.parse(d);
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		return temp;
+	}
+	
+	private static String getStingFromDate(Date date){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(date);
+	}
+	
+	/*All data is read from list of Temperature */
+	public void showLastRecord(){
+		Iterator<Temperature> iter = lastRecord.iterator();
+		while(iter.hasNext()){
+			System.out.println(iter.next());
+		}
+	}
+	
+	public void showAllRecordPerDey(){
+		Iterator<Temperature> iter = currentDayData.iterator();
+		while(iter.hasNext()){
+			System.out.println(iter.next());
+		}
+	}
+	
+	public void showAllRecordPerSearchingDey(){
+		Iterator<Temperature> iter = searchDayData.iterator();
+		while(iter.hasNext()){
+			System.out.println(iter.next());
+		}
+	}
+	
     public static void main(String[] args) throws SQLException {
 		TestJDBC tj = new TestJDBC();
+    	
 		tj.setConnection();
-		tj.getLastRecord();
+		tj.setLastRecord();
+		tj.setSearchDayData(getDateFromString("2015-09-27 00:00:00"));
+		tj.showAllRecordPerSearchingDey();    	
+    	
+		
+    	
     }
 }
