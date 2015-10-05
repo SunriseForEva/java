@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
-
 import java.util.ArrayList;
 
 import TemperatureInTheHouse.model.TemperatureInTheHouse;
@@ -24,13 +23,13 @@ public class TestJDBC {
 //	private String user = "sunrise4eva";
 //	private String password = "sunrisesql1982";
 	
-//	private String URL = "jdbc:mysql://31.129.67.21:3306/temperature";
-//	private String user = "slava";
-//	private String password = "slava7777777";
+	private String URL = "jdbc:mysql://31.129.67.21:3306/temperature";
+	private String user = "slava";
+	private String password = "slava7777777";
 	
-	private String URL = "jdbc:mysql://localhost/sunrise";
+	/*private String URL = "jdbc:mysql://localhost/sunrise";
 	private String user = "sunrise";
-	private String password = "777";
+	private String password = "777";*/
 	
     private Connection con = null;
     private Statement stmt = null;
@@ -53,7 +52,22 @@ public class TestJDBC {
     }
     
     
-    public Date getCurrentDay() {
+    public ArrayList<TemperatureInTheHouse> getCurrentDayData() {
+		return currentDayData;
+	}
+
+
+	public ArrayList<TemperatureInTheHouse> getCurrentHourData() {
+		return currentHourData;
+	}
+	
+
+	public ArrayList<TemperatureInTheHouse> getSearchDayData() {
+		return searchDayData;
+	}
+
+
+	public Date getCurrentDay() {
 		return currentDay;
 	}
 
@@ -62,14 +76,15 @@ public class TestJDBC {
 		return lastRecord.get(0);
 	}
     
-    private void setCurrentDayData() throws SQLException{
+    public void setCurrentDayData() throws SQLException{
 /*Получаем строковое представление текущей даты(private Date currentDate) для формирования
  *  SQL-запроса получающий из базы все сегодняшние(последие сутки в базе)значения*/
     	ResultSet rsRecPerDay = stmt.executeQuery(requestSearchDate+"'"+getStingFromDate(currentDay)+"'");
         getDataFromRequest(rsRecPerDay, currentDayData);
     }
     
-    private void setSearchDayData(Date searchingDate) throws SQLException{
+    public void setSearchDayData(Date searchingDate) throws SQLException{
+    	searchDayData = new ArrayList<TemperatureInTheHouse>();
     	ResultSet rsRecPerDay = stmt.executeQuery(requestSearchDate+"'"+getStingFromDate(searchingDate)+"'");
         getDataFromRequest(rsRecPerDay, searchDayData);
     }
@@ -85,17 +100,17 @@ public class TestJDBC {
 	private void getDataFromRequest(ResultSet rs, ArrayList<TemperatureInTheHouse> listTemperature) throws SQLException { 
 		while( rs.next() ){   
     		ArrayList<Object> record = new ArrayList<Object>();
-    		record.add(rs.getFloat("t_balconyWest"));
-    		record.add(rs.getFloat("t_bedroom"));
-    		record.add(rs.getFloat("t_mainRoom"));
-    		record.add(rs.getFloat("t_balconyEast"));
-    		record.add(rs.getFloat("t_childrenroom"));
-    		record.add(rs.getFloat("t_hall"));
-    		record.add(rs.getFloat("t_kitchen"));
-    		record.add(rs.getFloat("t_outerYard"));
-    		record.add(rs.getFloat("t_outerForest"));
-    		record.add(rs.getFloat("t_water"));
-    		record.add(rs.getFloat("t_pantry"));
+    		record.add(rs.getDouble("t_balconyWest"));
+    		record.add(rs.getDouble("t_bedroom"));
+    		record.add(rs.getDouble("t_mainRoom"));
+    		record.add(rs.getDouble("t_balconyEast"));
+    		record.add(rs.getDouble("t_childrenroom"));
+    		record.add(rs.getDouble("t_hall"));
+    		record.add(rs.getDouble("t_kitchen"));
+    		record.add(rs.getDouble("t_outerYard"));
+    		record.add(rs.getDouble("t_outerForest"));
+    		record.add(rs.getDouble("t_water"));
+    		record.add(rs.getDouble("t_pantry"));
     		record.add(getDateFromString(rs.getString("currentTime")));
     		listTemperature.add(new TemperatureInTheHouse(record));
     	}
@@ -114,12 +129,46 @@ public class TestJDBC {
 		return temp;
 	}
 	
+	private static String getStingForDateTime(Date date){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(date);
+	}
+	
 	private static String getStingFromDate(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.format(date);
 	}
 	
-	/*All data is read from list of Temperature */
+	public void setCurrentHourData(Date currentDay){
+		Date prevDate = new Date(currentDay.getTime());
+		prevDate.setMinutes(0);
+		prevDate.setSeconds(0);
+		
+		System.out.println(getStingForDateTime(prevDate));
+		
+		Date nextDate = new Date(currentDay.getTime());
+		nextDate.setMinutes(59);
+		nextDate.setSeconds(59);
+
+		System.out.println(getStingForDateTime(nextDate));
+		
+		String getCurrentHour = "SELECT *FROM housestemperatures "+
+			    "WHERE currentTime<'" + getStingForDateTime(nextDate)+
+			    "' && currentTime>'" + getStingForDateTime(prevDate) + "'";
+		
+		ResultSet rsLastRec;
+		try {
+			currentHourData = new ArrayList<TemperatureInTheHouse>();
+			rsLastRec = stmt.executeQuery(getCurrentHour);
+			getDataFromRequest(rsLastRec,currentHourData);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+	}
+	
+/*	All data is read from list of Temperature 
 	public void showLastRecord(){
 		Iterator<TemperatureInTheHouse> iter = lastRecord.iterator();
 		while(iter.hasNext()){
@@ -133,34 +182,19 @@ public class TestJDBC {
 			System.out.println(iter.next());
 		}
 	}
-	
-	public void showAllRecordPerSearchingDey(){
-		Iterator<TemperatureInTheHouse> iter = searchDayData.iterator();
+	*/
+	public void showAllRecordLastHour(){
+		Iterator<TemperatureInTheHouse> iter = currentHourData.iterator();
 		while(iter.hasNext()){
-			System.out.println(iter.next());
+			System.out.println(iter.next().toString());
 		}
 	}
 	
     public static void main(String[] args) throws SQLException {
-    	double[] arr = new double[5];
-    	
-    	for (int i = 0; i < 5 ; i++) {
-    		double begin = System.currentTimeMillis();
-    		
         	TestJDBC tj = new TestJDBC();
     		tj.setConnection();
     		tj.setLastRecord();
-    		tj.setSearchDayData(getDateFromString("2015-10-01 00:00:00"));
-//    		tj.showAllRecordPerSearchingDey();    	
-
-    		double end = System.currentTimeMillis();
-    		arr[i] = (end-begin)/(double)1000;
-		}
-    	
-		
-		for (double d : arr) {
-			System.out.print( d + " ");
-		}
-    	
+    		tj.setCurrentHourData(tj.getCurrentDay());
+    		tj.showAllRecordLastHour();    	
     }
 }

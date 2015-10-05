@@ -51,18 +51,18 @@ public class TemperatureInTheHouse {
 	 * 11 - текущее время и дата
 	 */
     public TemperatureInTheHouse(ArrayList<Object> t){
-    	this.currentDate = new Date((long)t.get(11));
-        this.hall =(double) t.get(2);
-        this.childRoom =(double) t.get(4);
-        this.kitchen =(double) t.get(6);
-        this.badRoom = (double)t.get(1);
-        this.hallWay =(double) t.get(5);
-        this.pantry = (double)t.get(10);
-        this.balcony_1 =(double) t.get(0);
-        this.balcony_2 = (double)t.get(3);
-        this.outerForest = (double)t.get(8);
-        this.outerYard = (double)t.get(7);
-        this.water = (double)t.get(9);
+    	this.balcony_1 =(double) t.get(0);
+    	this.badRoom = (double)t.get(1);
+    	this.hall =(double) t.get(2);
+    	this.balcony_2 = (double)t.get(3);
+    	this.childRoom =(double) t.get(4);
+    	this.hallWay =(double) t.get(5);
+    	this.kitchen =(double) t.get(6);
+    	this.outerYard = (double)t.get(7);
+    	this.outerForest = (double)t.get(8);
+    	this.water = (double)t.get(9);
+    	this.pantry = (double)t.get(10);
+    	this.currentDate =(Date) t.get(11);
     }
 
     public TemperatureInTheHouse() {
@@ -96,7 +96,16 @@ public class TemperatureInTheHouse {
         this.setOuterForest(temperature.get(8));
         this.setWater(temperature.get(9));
     }
-
+    
+    public String toString() {
+		return "Temperature [currentDate=" + currentDate + ", hall=" + hall
+				+ ", childRoom=" + childRoom + ", kitchen=" + kitchen
+				+ ", badRoom=" + badRoom + ", hallWay=" + hallWay + ", pantry="
+				+ pantry + ", balcony_1=" + balcony_1 + ", balcony_2="
+				+ balcony_2 + ", outerForest=" + outerForest + ", outerYard="
+				+ outerYard + ", water=" + water + "]";
+	}
+    
     public Date getCurrentDate() {
         return currentDate;
     }
