@@ -1,10 +1,12 @@
 package TemperatureInTheHouse;
 	
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import util.CreateExcelDoc;
+import util.TestJDBC;
 import TemperatureInTheHouse.model.TemperatureInTheHouse;
 import TemperatureInTheHouse.view.MainWindowController;
 import javafx.application.Application;
@@ -21,6 +23,7 @@ public class Main extends Application {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 	private CreateExcelDoc doc;
+	private TestJDBC db;
 	private TemperatureInTheHouse currentValueOfTheData ;
 	static int count  = 0;
 	private ArrayList<TemperatureInTheHouse> day = new ArrayList<TemperatureInTheHouse>();
@@ -68,7 +71,18 @@ public class Main extends Application {
 			controller = loader.getController();
 
 			doc = new CreateExcelDoc(CreateExcelDoc.READ);
-			currentValueOfTheData = new TemperatureInTheHouse(doc.readLineFromExcel(doc.getCountOfLines()));
+//			currentValueOfTheData = new TemperatureInTheHouse(doc.readLineFromExcel(doc.getCountOfLines()));
+			
+			try {
+				db.setConnection();
+				db.setLastRecord();
+				currentValueOfTheData = db.getLastRecord();
+				System.out.println("!!!");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			
 			setCurrentDate();
 			setCurrentHour();
@@ -357,7 +371,6 @@ public class Main extends Application {
 		
 		for (int i = 0; i < array.size(); i++) {
 			if( array.get(i).getOuterForest() > -50 && array.get(i).getOuterForest() < 70){
-				System.out.println(array.get(i).getOuterForest());
 				temp.add(array.get(i).getOuterForest());
 			}
 		}
@@ -419,7 +432,7 @@ public class Main extends Application {
 		System.gc();
 	    try{
 		    doc = new CreateExcelDoc(CreateExcelDoc.READ);
-		    currentValueOfTheData = new TemperatureInTheHouse(doc.readLineFromExcel(doc.getCountOfLines()));
+//		    currentValueOfTheData = new TemperatureInTheHouse(doc.readLineFromExcel(doc.getCountOfLines()));
 		    setCurrentDate();
 		    setCurrentHour();
 		    getTemperatureLastDay();
