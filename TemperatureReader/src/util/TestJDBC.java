@@ -1,22 +1,24 @@
-package test.JDBC;
+package util;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 
-import test.JDBC.Temperature;
-
 import java.util.ArrayList;
 
+import TemperatureInTheHouse.model.TemperatureInTheHouse;
+
 public class TestJDBC {
-	private ArrayList<Temperature> lastRecord = new ArrayList<Temperature>();
 	
-	private ArrayList<Temperature> currentHourData = new ArrayList<Temperature>();
-	private ArrayList<Temperature> currentDayData = new ArrayList<Temperature>();
+
+	private ArrayList<TemperatureInTheHouse> lastRecord = new ArrayList<TemperatureInTheHouse>();
 	
-	private ArrayList<Temperature> searchHourData = new ArrayList<Temperature>();
-	private ArrayList<Temperature> searchDayData = new ArrayList<Temperature>();
+	private ArrayList<TemperatureInTheHouse> currentHourData = new ArrayList<TemperatureInTheHouse>();
+	private ArrayList<TemperatureInTheHouse> currentDayData = new ArrayList<TemperatureInTheHouse>();
+	
+	private ArrayList<TemperatureInTheHouse> searchHourData = new ArrayList<TemperatureInTheHouse>();
+	private ArrayList<TemperatureInTheHouse> searchDayData = new ArrayList<TemperatureInTheHouse>();
 	
 //	private String URL = "jdbc:mysql://178.219.93.93:3306/myDb";
 //	private String user = "sunrise4eva";
@@ -51,6 +53,15 @@ public class TestJDBC {
     }
     
     
+    public Date getCurrentDay() {
+		return currentDay;
+	}
+
+
+	public TemperatureInTheHouse getLastRecord() {
+		return lastRecord.get(0);
+	}
+    
     private void setCurrentDayData() throws SQLException{
 /*Получаем строковое представление текущей даты(private Date currentDate) для формирования
  *  SQL-запроса получающий из базы все сегодняшние(последие сутки в базе)значения*/
@@ -64,14 +75,14 @@ public class TestJDBC {
     }
     
     /* Last record get from table and set current(date of last record)*/
-    private void setLastRecord() throws SQLException{ 
+    public void setLastRecord() throws SQLException{ 
     	ResultSet rsLastRec = stmt.executeQuery(requestLastRecord);
     	getDataFromRequest(rsLastRec,lastRecord);
     	currentDay = lastRecord.get(0).getCurrentDate();
     }
     
     /*   all data read from request and put it into object Temperature */
-	private void getDataFromRequest(ResultSet rs, ArrayList<Temperature> listTemperature) throws SQLException { 
+	private void getDataFromRequest(ResultSet rs, ArrayList<TemperatureInTheHouse> listTemperature) throws SQLException { 
 		while( rs.next() ){   
     		ArrayList<Object> record = new ArrayList<Object>();
     		record.add(rs.getFloat("t_balconyWest"));
@@ -86,7 +97,7 @@ public class TestJDBC {
     		record.add(rs.getFloat("t_water"));
     		record.add(rs.getFloat("t_pantry"));
     		record.add(getDateFromString(rs.getString("currentTime")));
-    		listTemperature.add(new Temperature(record));
+    		listTemperature.add(new TemperatureInTheHouse(record));
     	}
 	}
 			
@@ -110,21 +121,21 @@ public class TestJDBC {
 	
 	/*All data is read from list of Temperature */
 	public void showLastRecord(){
-		Iterator<Temperature> iter = lastRecord.iterator();
+		Iterator<TemperatureInTheHouse> iter = lastRecord.iterator();
 		while(iter.hasNext()){
 			System.out.println(iter.next());
 		}
 	}
 	
 	public void showAllRecordPerDey(){
-		Iterator<Temperature> iter = currentDayData.iterator();
+		Iterator<TemperatureInTheHouse> iter = currentDayData.iterator();
 		while(iter.hasNext()){
 			System.out.println(iter.next());
 		}
 	}
 	
 	public void showAllRecordPerSearchingDey(){
-		Iterator<Temperature> iter = searchDayData.iterator();
+		Iterator<TemperatureInTheHouse> iter = searchDayData.iterator();
 		while(iter.hasNext()){
 			System.out.println(iter.next());
 		}
