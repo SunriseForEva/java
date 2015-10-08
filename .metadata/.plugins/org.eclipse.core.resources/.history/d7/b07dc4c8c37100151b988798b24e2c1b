@@ -1,0 +1,64 @@
+package application;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.concurrent.Task;
+import javafx.scene.control.Button;
+
+public class MovableButtonFromLeftTop extends Task<Void> {
+	Button movableButton = new Button(";)");
+	IntegerProperty  x , y;  
+	int a = 0,b = 0; 
+	boolean stop = false;
+	
+	public MovableButtonFromLeftTop()
+	{
+		movableButton.setLayoutX(a);
+		movableButton.setLayoutX(b);
+	}
+	
+	@Override
+	protected Void call() {
+		
+		try{
+			
+		while(true){
+			while(a<370){
+				
+				x = new SimpleIntegerProperty(a++);
+				y = new SimpleIntegerProperty(b++);
+				Thread.sleep(10);
+				movableButton.layoutXProperty().bind(x);
+				movableButton.layoutYProperty().bind(y);
+			}
+			
+			while( b >= 0 ){
+				x = new SimpleIntegerProperty(a);
+				y = new SimpleIntegerProperty(b--);
+				Thread.sleep(10);
+				movableButton.layoutXProperty().bind(x);
+				movableButton.layoutYProperty().bind(y);
+			}
+			
+			while( a >= 0 ){
+				x = new SimpleIntegerProperty(a--);
+				y = new SimpleIntegerProperty(b);
+				Thread.sleep(10);
+				movableButton.layoutXProperty().bind(x);
+				movableButton.layoutYProperty().bind(y);
+			}
+			
+		}
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public Button getMovableButton() {
+		return movableButton;
+	}
+	
+	
+
+}

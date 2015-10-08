@@ -1,0 +1,7 @@
+package BindButtonWithSomeValue;
+
+import javafx.concurrent.Task;
+
+public class MovableButton extends Task<V> {
+
+}

@@ -1,0 +1,27 @@
+package BindButtonWithSomeValue;
+
+import javafx.concurrent.Task;
+import javafx.scene.control.Button;
+
+public class MovableButton extends Task<Object> {
+	Button movableButton = new Button(";)");
+	
+	
+	public Button getMovableButton() {
+		return movableButton;
+	}
+
+
+	@Override
+	protected Object call() throws Exception {
+		while(true){
+			Thread.sleep(100);
+			int x = 0,y = 0;
+			x++;
+			
+			movableButton.setLayoutX(x);
+			movableButton.setLayoutY(y);
+		}
+	}
+
+}

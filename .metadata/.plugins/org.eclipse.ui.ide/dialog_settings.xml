@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="CleanDialogSettings">
+		<item value="411" key="DIALOG_WIDTH"/>
+		<item value="true" key="TOGGLE_SELECTED"/>
+		<item value="361" key="DIALOG_HEIGHT"/>
+		<item value="435" key="DIALOG_X_ORIGIN"/>
+		<item value="257" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="ExternalProjectImportWizard">
 		<item value="false" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
-			<item value="E:\Slavik\GitProject\Java\HelloAnt"/>
-			<item value="E:\Slavik\GitProject\Java\Services"/>
+			<item value="E:\Slavik\GitProject\Java\JavaFX_JohanVos"/>
+			<item value="F:\.5.Java\Source\JavaFX_JohanVos"/>
+			<item value="E:\Slavik\GitProject\Java\TestMultiThread"/>
+			<item value="E:\Slavik\GitProject\Java\TestJDBC"/>
+			<item value="E:\Slavik\GitProject\Java\TemperatureReader"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
 			<item value=""/>
 		</list>
+	</section>
+	<section name="BasicNewProjectResourceWizard">
 	</section>
 </section>

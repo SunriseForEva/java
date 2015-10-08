@@ -1,0 +1,44 @@
+package application;
+
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
+import javafx.scene.shape.Rectangle;
+
+public class Score {
+	HBox visScore;
+	Rectangle digit1, digit2, digit3, digit4, digit5;
+	Image img;
+	private int score;
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	void setVisScore(){
+		for(int i = 0 ; i < String.valueOf(score).length() ; i++){
+			
+		}
+	}
+	
+	Image getImageForDigit(char ch){
+		
+		switch(ch){
+		case('0'): return new Image("file:res/num/0.png");
+		case('1'): return new Image("file:res/num/1.png");
+		case('2'): return new Image("file:res/num/2.png");
+		case('3'): return new Image("file:res/num/3.png");
+		case('4'): return new Image("file:res/num/4.png");
+		case('5'): return new Image("file:res/num/5.png");
+		case('6'): return new Image("file:res/num/6.png");
+		case('7'): return new Image("file:res/num/7.png");
+		case('8'): return new Image("file:res/num/8.png");
+		case('9'): return new Image("file:res/num/9.png");
+		}
+		
+		return new Image("file:res/num/0.png");
+	}
+}

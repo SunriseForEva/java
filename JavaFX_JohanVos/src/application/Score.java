@@ -1,0 +1,72 @@
+package application;
+
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+
+public class Score {
+	private HBox visScore;
+	private Rectangle[] digits;
+	private Image img;
+	private int score;
+
+	public Score(int score){
+		this.score = score;
+		
+		visScore = new HBox(5);
+		visScore.setLayoutX(0);
+		visScore.setLayoutY(0);
+		
+		digits = new Rectangle[5];
+	}
+	
+	
+	
+	void setVisScore(){
+		for(int i = 0 ; i < String.valueOf(score).length() ; i++){
+			img = getImageForDigit(String.valueOf(score).charAt(i));
+			digits[i] = new Rectangle();
+			digits[i].setWidth(45);
+			digits[i].setHeight(45);
+			digits[i].setFill(new ImagePattern(img, 0, 0, 1, 1, true));
+			visScore.getChildren().add(digits[i]);
+		}
+	}
+	
+	Image getImageForDigit(char ch){
+		System.out.println("SetImage!");
+		switch(ch){
+		case('0'): return new Image("file:res/num/0.png");
+		case('1'): return new Image("file:res/num/1.png");
+		case('2'): return new Image("file:res/num/2.png");
+		case('3'): return new Image("file:res/num/3.png");
+		case('4'): return new Image("file:res/num/4.png");
+		case('5'): return new Image("file:res/num/5.png");
+		case('6'): return new Image("file:res/num/6.png");
+		case('7'): return new Image("file:res/num/7.png");
+		case('8'): return new Image("file:res/num/8.png");
+		case('9'): return new Image("file:res/num/9.png");
+		}
+		
+		return new Image("file:res/num/0.png");
+	}
+	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		
+		
+		this.score = score;
+	}
+
+
+
+	public HBox getVisScore() {
+		return visScore;
+	}
+	
+	
+}
