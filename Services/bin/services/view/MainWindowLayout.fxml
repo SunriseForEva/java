@@ -22,7 +22,7 @@
       
       <CheckBox fx:id="gazWithMeter" layoutX="57.0" layoutY="100.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="90.0" text="По счетчику">
          <font>
-            <Font size="11.0" />
+            <Font name="Arial" size="11.0" />
          </font></CheckBox>
       <TextField fx:id="gazAccaunt" layoutX="155.0" layoutY="96.0" prefHeight="25.0" prefWidth="111.0">
          <font>
@@ -160,15 +160,15 @@
       
       <Button fx:id="buttonSave" layoutX="359.0" layoutY="315.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Сохранить">
          <font>
-            <Font size="11.0" />
+            <Font size="10.0" />
          </font></Button>
       <Button fx:id="buttonClear" layoutX="439.0" layoutY="315.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="66.0" text="Очистить">
          <font>
-            <Font size="11.0" />
+            <Font size="10.0" />
          </font></Button>
       <Button fx:id="buttonCalculation" layoutX="512.0" layoutY="315.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Расчитать">
          <font>
-            <Font size="11.0" />
+            <Font size="10.0" />
          </font></Button>
       <TextField fx:id="totalSum" editable="false" layoutX="592.0" layoutY="315.0" prefHeight="25.0" prefWidth="57.0">
          <font>
@@ -243,7 +243,10 @@
       <Separator layoutX="11.0" layoutY="154.0" prefHeight="3.0" prefWidth="647.0" />
       <Separator layoutX="12.0" layoutY="217.0" prefHeight="3.0" prefWidth="647.0" />
       <Separator layoutX="12.0" layoutY="250.0" prefHeight="3.0" prefWidth="647.0" />
-      <Button fx:id="buttonOpenAddress" layoutX="16.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Выбрать существующий адрес" />
+      <Button fx:id="buttonOpenAddress" layoutX="16.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Выбрать существующий адрес">
+         <font>
+            <Font size="10.0" />
+         </font></Button>
       
    </children>
 </AnchorPane>

@@ -23,7 +23,7 @@ public class Main extends Application {
 	public void start(final Stage primaryStage) {
 		try {
 			this.primaryStage = primaryStage;
-			this.primaryStage.setTitle("Расчет месячной платы за квартиру");
+			this.primaryStage.setTitle("Services for month");
 			this.primaryStage.setResizable(false);
 			
 			initRootLayout();
@@ -32,7 +32,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	void initRootLayout() throws IOException{
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("view/RootLayout.fxml"));
