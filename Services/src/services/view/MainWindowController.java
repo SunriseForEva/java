@@ -131,21 +131,25 @@ public class MainWindowController {
 					{
 						Alert alert = new Alert(Alert.AlertType.INFORMATION);
 						alert.setContentText("Необходимо заполнить поля адреса!");
+						alert.setTitle("Заполните необходимые поля!");
+						alert.setHeaderText("Внимание!");
 						alert.show();
 					}
 					
 					if(!(waterWithMeter.isSelected() || (waterWithoutMeter.isSelected()))){
-						Dialogs.create()
-			            .title("�� ������ ��� ��������")
-			            .masthead("����������, �������� ������� ����� ������ \n����: �� �������� ��� ��� ��������.")
-			            .showWarning();
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setContentText("Вода. Необходимо выбрать тип\nпоказаний (по счетчику или нет) !");
+						alert.setTitle("Заполните необходимые поля!");
+						alert.setHeaderText("Внимание!");
+						alert.show();
 					}
 					
 					if(!(gazWithMeter.isSelected() || (gazWithoutMeter.isSelected()))){
-						Dialogs.create()
-			            .title("�� ������ ��� �������")
-			            .masthead("����������, �������� ������� ����� ������ \n���: �� �������� ��� ��� ��������.")
-			            .showWarning();
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setContentText("Газ. Необходимо выбрать тип\nпоказаний (по счетчику или нет) !");
+						alert.setTitle("Заполните необходимые поля!");
+						alert.setHeaderText("Внимание!");
+						alert.show();
 					}
 					
 			    	servicesController = new Services();
@@ -193,26 +197,28 @@ public class MainWindowController {
 						, waterAccauntController, gasAccauntController, housingOfficeAccountController);
 					
 					if(servicesController.getElectricity().getDifferenceInTestimonies() < 0){
-						Dialogs.create()
-			            .title("������������ ���� ������.")
-			            .masthead("������ ������� ��������������. ��������� ������������ ����� ������� ��������� �������� � ����������. ")
-			            .showWarning();
-						return;
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setContentText("Электроэнергия. Некорректный ввод!");
+						alert.setTitle("Некорректно заполненны поля!");
+						alert.setHeaderText("Внимание!");
+						alert.show();
 					}
 					
 					if(servicesController.getGas().getDifferenceInTestimonies() < 0 ){
-						Dialogs.create()
-			            .title("������������ ���� ������.")
-			            .masthead("������ ������� ����. ��������� ������������ ����� ������� ��������� �������� � ����������. ")
-			            .showWarning();
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setContentText("Газ. Некорректный ввод!");
+						alert.setTitle("Некорректно заполненны поля!");
+						alert.setHeaderText("Внимание!");
+						alert.show();
 						return;
 					}
 					
 					if(servicesController.getWater().getDifferenceInTestimonies() < 0){
-						Dialogs.create()
-			            .title("������������ ���� ������.")
-			            .masthead("������ ������� ����. ��������� ������������ ����� ������� ��������� �������� � ����������. ")
-			            .showWarning();
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setContentText("Вода. Некорректный ввод!");
+						alert.setTitle("Некорректно заполненны поля!");
+						alert.setHeaderText("Внимание!");
+						alert.show();
 						return;
 					}
 					
@@ -240,12 +246,11 @@ public class MainWindowController {
 					
 					MainWindowController.this.totalSum.setText(String.valueOf(totalSum));
 				}catch(NullPointerException | NumberFormatException e){
-					Dialogs.create()
-		            .title("������������ ����")
-		            .masthead("��������� ������������ �����")
-		            .message("��������� ��������, � ����� � ����� (��� ���� �����) "
-		            		+ "���������� ������� ������ �����.")
-		            .showWarning();
+					Alert alert = new Alert(Alert.AlertType.INFORMATION);
+					alert.setContentText("Исключение!!!");
+					alert.setTitle("Некорректно заполненны поля!");
+					alert.setHeaderText("Внимание!");
+					alert.show();
 				}
 			}
 		});
