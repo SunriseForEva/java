@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import com.sun.jnlp.ApiDialog;
+import javafx.scene.control.Alert;
 import org.controlsfx.dialog.Dialogs;
 
 import javafx.event.ActionEvent;
@@ -128,7 +129,9 @@ public class MainWindowController {
 					if(adrressCity.getText().equals("") || adrressStreet.getText().equals("") ||
 							adrressBuilding.getText().equals("") ||	adrressFlat.getText().equals(""))
 					{
-						
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setContentText("Необходимо заполнить поля адреса!");
+						alert.show();
 					}
 					
 					if(!(waterWithMeter.isSelected() || (waterWithoutMeter.isSelected()))){
