@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
+import com.sun.jnlp.ApiDialog;
 import org.controlsfx.dialog.Dialogs;
 
 import javafx.event.ActionEvent;
@@ -127,24 +128,20 @@ public class MainWindowController {
 					if(adrressCity.getText().equals("") || adrressStreet.getText().equals("") ||
 							adrressBuilding.getText().equals("") ||	adrressFlat.getText().equals(""))
 					{
-						Dialogs.create()
-			            .title("Пустое поле")
-			            .masthead("Пожалуйста, заполните все поля адреса")
-			            .message("Некоторые поля остались незаполненными.")
-			            .showWarning();
+						
 					}
 					
 					if(!(waterWithMeter.isSelected() || (waterWithoutMeter.isSelected()))){
 						Dialogs.create()
-			            .title("Не выбран вид подсчета")
-			            .masthead("Пожалуйста, поставте галочку возле текста \nВода: По счетчику или Без счетчика.")
+			            .title("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")
+			            .masthead("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ \nпїЅпїЅпїЅпїЅ: пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.")
 			            .showWarning();
 					}
 					
 					if(!(gazWithMeter.isSelected() || (gazWithoutMeter.isSelected()))){
 						Dialogs.create()
-			            .title("Не выбран вид подсета")
-			            .masthead("Пожалуйста, поставте галочку возле текста \nГаз: По счетчику или Без счетчика.")
+			            .title("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")
+			            .masthead("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ \nпїЅпїЅпїЅ: пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.")
 			            .showWarning();
 					}
 					
@@ -194,24 +191,24 @@ public class MainWindowController {
 					
 					if(servicesController.getElectricity().getDifferenceInTestimonies() < 0){
 						Dialogs.create()
-			            .title("Некорректный ввод данных.")
-			            .masthead("Расчет расхода электроэнэргии. Проверьте правильность ввода текуших показаний счетчика и предыдущих. ")
+			            .title("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.")
+			            .masthead("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. ")
 			            .showWarning();
 						return;
 					}
 					
 					if(servicesController.getGas().getDifferenceInTestimonies() < 0 ){
 						Dialogs.create()
-			            .title("Некорректный ввод данных.")
-			            .masthead("Расчет расхода газа. Проверьте правильность ввода текуших показаний счетчика и предыдущих. ")
+			            .title("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.")
+			            .masthead("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. ")
 			            .showWarning();
 						return;
 					}
 					
 					if(servicesController.getWater().getDifferenceInTestimonies() < 0){
 						Dialogs.create()
-			            .title("Некорректный ввод данных.")
-			            .masthead("Расчет расхода воды. Проверьте правильность ввода текуших показаний счетчика и предыдущих. ")
+			            .title("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.")
+			            .masthead("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. ")
 			            .showWarning();
 						return;
 					}
@@ -241,10 +238,10 @@ public class MainWindowController {
 					MainWindowController.this.totalSum.setText(String.valueOf(totalSum));
 				}catch(NullPointerException | NumberFormatException e){
 					Dialogs.create()
-		            .title("Неправильный ввод")
-		            .masthead("Проверить корректность ввода")
-		            .message("Показания счетчика, № счета и тариф (все виды услуг) "
-		            		+ "необходимо вводить только цифры.")
+		            .title("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ")
+		            .masthead("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ")
+		            .message("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ) "
+		            		+ "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.")
 		            .showWarning();
 				}
 			}
@@ -434,12 +431,12 @@ public class MainWindowController {
 			}
 		});
 	}
-	/*В файле расположени :
-	 * 1 строка :
-	 * 		 городо улица дом квартира
-	 * 2 строка : 
-	 * 		 Лиц счет газа вода электричество ЖКХ
-	 * 	все данные вводятся через пробел!!!*/
+	/*пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ :
+	 * 1 пїЅпїЅпїЅпїЅпїЅпїЅ :
+	 * 		 пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	 * 2 пїЅпїЅпїЅпїЅпїЅпїЅ : 
+	 * 		 пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
+	 * 	пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!!!*/
 	 private void loadFromFile(File file) {
 		try {
 		    BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -469,63 +466,63 @@ public class MainWindowController {
 		try {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 
-			bufferedWriter.write("Адрес: г." + adrressCity.getText() + 
-					", ул." + adrressStreet.getText() + 
-					", д."+ adrressBuilding.getText()+ 
-					", кв."+ adrressFlat.getText());
+			bufferedWriter.write("пїЅпїЅпїЅпїЅпїЅ: пїЅ." + adrressCity.getText() + 
+					", пїЅпїЅ." + adrressStreet.getText() + 
+					", пїЅ."+ adrressBuilding.getText()+ 
+					", пїЅпїЅ."+ adrressFlat.getText());
 			bufferedWriter.newLine();
 			bufferedWriter.newLine();
 			if(gazWithMeter.isSelected()){
-			    bufferedWriter.write("Газ по счетчику: № р.с. " +  gazAccaunt.getText() +
-				    " тариф: " + gazTariff.getText() +
-				    " текущие показания счетчика: " + gazCurrentTestimonies.getText() +
-				    " предыдущие: " + gazPreveriusTestimonies.getText() +
-				    " разница: " + gazDifferencInTestimonies.getText() +
-				    " сумма: " + gazSum.getText());
+			    bufferedWriter.write("пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅ пїЅ.пїЅ. " +  gazAccaunt.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅ: " + gazTariff.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + gazCurrentTestimonies.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + gazPreveriusTestimonies.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + gazDifferencInTestimonies.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅ: " + gazSum.getText());
 			    bufferedWriter.newLine();
 			    bufferedWriter.newLine();
 			}else
 			{
-			    bufferedWriter.write("Газ по тарифу: № р.с. " +  gazWithoutMeterAccaunt.getText() +
-				    " тариф: " + gazWithoutMeterTariff.getText() +
-				    " сумма: " + gazWithoutMeterSum.getText());
+			    bufferedWriter.write("пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: пїЅ пїЅ.пїЅ. " +  gazWithoutMeterAccaunt.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅ: " + gazWithoutMeterTariff.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅ: " + gazWithoutMeterSum.getText());
 			    bufferedWriter.newLine();
 			    bufferedWriter.newLine();
 			}
 			
-			bufferedWriter.write("Эл.эн. по счетчику: № р.с. " +  electricityAccaunt.getText() +
-					" тариф: " + electricityTariff.getText() +
-					" текущие показания счетчика: " + electricityCurrentTestimonies.getText() +
-					" предыдущие: " + electricityPreveriusTestimonies.getText() +
-					" разница: " + electricityDifferencInTestimonies.getText() +
-					" сумма: " + electricitySum.getText());
+			bufferedWriter.write("пїЅпїЅ.пїЅпїЅ. пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅ пїЅ.пїЅ. " +  electricityAccaunt.getText() +
+					" пїЅпїЅпїЅпїЅпїЅ: " + electricityTariff.getText() +
+					" пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + electricityCurrentTestimonies.getText() +
+					" пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + electricityPreveriusTestimonies.getText() +
+					" пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + electricityDifferencInTestimonies.getText() +
+					" пїЅпїЅпїЅпїЅпїЅ: " + electricitySum.getText());
 			bufferedWriter.newLine();
 			bufferedWriter.newLine();
 			if(waterWithMeter.isSelected()){
-			    bufferedWriter.write("Вода по счетчику : № р.с. " +  waterAccaunt.getText() +
-				    " тариф: " + waterTariff.getText() +
-				    " текущие показания счетчика: " + waterCurrentTestimonies.getText() +
-				    " предыдущие: " + waterPreveriusTestimonies.getText() +
-				    " разница: " + waterDifferencInTestimonies.getText() +
-				    " сумма: " + waterSum.getText());
+			    bufferedWriter.write("пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ : пїЅ пїЅ.пїЅ. " +  waterAccaunt.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅ: " + waterTariff.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + waterCurrentTestimonies.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + waterPreveriusTestimonies.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + waterDifferencInTestimonies.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅ: " + waterSum.getText());
 			    bufferedWriter.newLine();
 			    bufferedWriter.newLine();
 			}else
 			{
-			    bufferedWriter.write("Вода по тарифу : № р.с. " +  waterWithoutMeterAccaunt.getText() +
-				    " тариф: " + waterWithoutMeterTariff.getText() +
-				    " сумма: " + waterWithoutMeterSum.getText());
+			    bufferedWriter.write("пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ : пїЅ пїЅ.пїЅ. " +  waterWithoutMeterAccaunt.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅ: " + waterWithoutMeterTariff.getText() +
+				    " пїЅпїЅпїЅпїЅпїЅ: " + waterWithoutMeterSum.getText());
 			    bufferedWriter.newLine();
 			    bufferedWriter.newLine();
 			}
 			
-			bufferedWriter.write("ЖКХ по тарифу: № р.с. " +  housingOfficeAccaunt.getText() +
-					" тариф: " + housingOfficeTariff.getText() +
-					" сумма: " + housingOfficeSum.getText());
+			bufferedWriter.write("пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: пїЅ пїЅ.пїЅ. " +  housingOfficeAccaunt.getText() +
+					" пїЅпїЅпїЅпїЅпїЅ: " + housingOfficeTariff.getText() +
+					" пїЅпїЅпїЅпїЅпїЅ: " + housingOfficeSum.getText());
 			bufferedWriter.newLine();
 			bufferedWriter.newLine();
 			
-			bufferedWriter.write("Общая сумма: " +  totalSum.getText());
+			bufferedWriter.write("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: " +  totalSum.getText());
 			
 			bufferedWriter.flush();
 			bufferedWriter.close();
