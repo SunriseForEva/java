@@ -219,6 +219,7 @@
          <font>
             <Font size="11.0" />
          </font></Label>
+
       <Label layoutX="527.0" layoutY="74.0" text="Разница">
          <font>
             <Font size="11.0" />

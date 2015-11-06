@@ -247,8 +247,9 @@ public class MainWindowController {
 					MainWindowController.this.totalSum.setText(String.valueOf(totalSum));
 				}catch(NullPointerException | NumberFormatException e){
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
-					alert.setContentText("Исключение!!!");
-					alert.setTitle("Некорректно заполненны поля!");
+					alert.setContentText("Показания счетчика, № счета \nи тариф (все виды услуг)" +
+							"\nнеобходимо вводить только цифры.");
+					alert.setTitle("Заполните все поля корректно");
 					alert.setHeaderText("Внимание!");
 					alert.show();
 				}
@@ -439,99 +440,99 @@ public class MainWindowController {
 			}
 		});
 	}
-	/*� ����� ����������� :
-	 * 1 ������ :
-	 * 		 ������ ����� ��� ��������
-	 * 2 ������ : 
-	 * 		 ��� ���� ���� ���� ������������� ���
-	 * 	��� ������ �������� ����� ������!!!*/
-	 private void loadFromFile(File file) {
+	/*В файле расположени :
+	 * 1 строка :
+	 * 		 городо улица дом квартира
+	 * 2 строка :
+	 * 		 Лиц счет газа вода электричество ЖКХ
+	 * 	все данные вводятся через пробел!!!*/
+	private void loadFromFile(File file) {
 		try {
-		    BufferedReader reader = new BufferedReader(new FileReader(file));
-		    String str1 = reader.readLine();System.out.println(str1);
-		    String str2 = reader.readLine();System.out.println(str2);
-		    String[] strArr = str1.split(" ");
-		    
-		    adrressCity.setText(strArr[0]);
-		    adrressStreet.setText(strArr[1]);
-		    adrressBuilding.setText(strArr[2]);
-		    adrressFlat.setText(strArr[3]);
-		    
-		    strArr = str2.split(" ");
-		    gazAccaunt.setText(strArr[0]);
-		    gazWithoutMeterAccaunt.setText(strArr[0]);
-		    waterAccaunt.setText(strArr[1]);
-		    waterWithoutMeterAccaunt.setText(strArr[1]);
-		    electricityAccaunt.setText(strArr[2]);
-		    housingOfficeAccaunt.setText(strArr[3]);
-		    
-		    reader.close();
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			String str1 = reader.readLine();System.out.println(str1);
+			String str2 = reader.readLine();System.out.println(str2);
+			String[] strArr = str1.split(" ");
+
+			adrressCity.setText(strArr[0]);
+			adrressStreet.setText(strArr[1]);
+			adrressBuilding.setText(strArr[2]);
+			adrressFlat.setText(strArr[3]);
+
+			strArr = str2.split(" ");
+			gazAccaunt.setText(strArr[0]);
+			gazWithoutMeterAccaunt.setText(strArr[0]);
+			waterAccaunt.setText(strArr[1]);
+			waterWithoutMeterAccaunt.setText(strArr[1]);
+			electricityAccaunt.setText(strArr[2]);
+			housingOfficeAccaunt.setText(strArr[3]);
+
+			reader.close();
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
-	 }
+	}
 	private void saveToFile(File file){
 		try {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 
-			bufferedWriter.write("�����: �." + adrressCity.getText() + 
-					", ��." + adrressStreet.getText() + 
-					", �."+ adrressBuilding.getText()+ 
-					", ��."+ adrressFlat.getText());
+			bufferedWriter.write("Адрес: г." + adrressCity.getText() +
+					", ул." + adrressStreet.getText() +
+					", д."+ adrressBuilding.getText()+
+					", кв."+ adrressFlat.getText());
 			bufferedWriter.newLine();
 			bufferedWriter.newLine();
 			if(gazWithMeter.isSelected()){
-			    bufferedWriter.write("��� �� ��������: � �.�. " +  gazAccaunt.getText() +
-				    " �����: " + gazTariff.getText() +
-				    " ������� ��������� ��������: " + gazCurrentTestimonies.getText() +
-				    " ����������: " + gazPreveriusTestimonies.getText() +
-				    " �������: " + gazDifferencInTestimonies.getText() +
-				    " �����: " + gazSum.getText());
-			    bufferedWriter.newLine();
-			    bufferedWriter.newLine();
+				bufferedWriter.write("Газ по счетчику: № р.с. " +  gazAccaunt.getText() +
+						" тариф: " + gazTariff.getText() +
+						" текущие показания счетчика: " + gazCurrentTestimonies.getText() +
+						" предыдущие: " + gazPreveriusTestimonies.getText() +
+						" разница: " + gazDifferencInTestimonies.getText() +
+						" сумма: " + gazSum.getText());
+				bufferedWriter.newLine();
+				bufferedWriter.newLine();
 			}else
 			{
-			    bufferedWriter.write("��� �� ������: � �.�. " +  gazWithoutMeterAccaunt.getText() +
-				    " �����: " + gazWithoutMeterTariff.getText() +
-				    " �����: " + gazWithoutMeterSum.getText());
-			    bufferedWriter.newLine();
-			    bufferedWriter.newLine();
+				bufferedWriter.write("Газ по тарифу: № р.с. " +  gazWithoutMeterAccaunt.getText() +
+						" тариф: " + gazWithoutMeterTariff.getText() +
+						" сумма: " + gazWithoutMeterSum.getText());
+				bufferedWriter.newLine();
+				bufferedWriter.newLine();
 			}
-			
-			bufferedWriter.write("��.��. �� ��������: � �.�. " +  electricityAccaunt.getText() +
-					" �����: " + electricityTariff.getText() +
-					" ������� ��������� ��������: " + electricityCurrentTestimonies.getText() +
-					" ����������: " + electricityPreveriusTestimonies.getText() +
-					" �������: " + electricityDifferencInTestimonies.getText() +
-					" �����: " + electricitySum.getText());
+
+			bufferedWriter.write("Эл.эн. по счетчику: № р.с. " +  electricityAccaunt.getText() +
+					" тариф: " + electricityTariff.getText() +
+					" текущие показания счетчика: " + electricityCurrentTestimonies.getText() +
+					" предыдущие: " + electricityPreveriusTestimonies.getText() +
+					" разница: " + electricityDifferencInTestimonies.getText() +
+					" сумма: " + electricitySum.getText());
 			bufferedWriter.newLine();
 			bufferedWriter.newLine();
 			if(waterWithMeter.isSelected()){
-			    bufferedWriter.write("���� �� �������� : � �.�. " +  waterAccaunt.getText() +
-				    " �����: " + waterTariff.getText() +
-				    " ������� ��������� ��������: " + waterCurrentTestimonies.getText() +
-				    " ����������: " + waterPreveriusTestimonies.getText() +
-				    " �������: " + waterDifferencInTestimonies.getText() +
-				    " �����: " + waterSum.getText());
-			    bufferedWriter.newLine();
-			    bufferedWriter.newLine();
+				bufferedWriter.write("Вода по счетчику : № р.с. " +  waterAccaunt.getText() +
+						" тариф: " + waterTariff.getText() +
+						" текущие показания счетчика: " + waterCurrentTestimonies.getText() +
+						" предыдущие: " + waterPreveriusTestimonies.getText() +
+						" разница: " + waterDifferencInTestimonies.getText() +
+						" сумма: " + waterSum.getText());
+				bufferedWriter.newLine();
+				bufferedWriter.newLine();
 			}else
 			{
-			    bufferedWriter.write("���� �� ������ : � �.�. " +  waterWithoutMeterAccaunt.getText() +
-				    " �����: " + waterWithoutMeterTariff.getText() +
-				    " �����: " + waterWithoutMeterSum.getText());
-			    bufferedWriter.newLine();
-			    bufferedWriter.newLine();
+				bufferedWriter.write("Вода по тарифу : № р.с. " +  waterWithoutMeterAccaunt.getText() +
+						" тариф: " + waterWithoutMeterTariff.getText() +
+						" сумма: " + waterWithoutMeterSum.getText());
+				bufferedWriter.newLine();
+				bufferedWriter.newLine();
 			}
-			
-			bufferedWriter.write("��� �� ������: � �.�. " +  housingOfficeAccaunt.getText() +
-					" �����: " + housingOfficeTariff.getText() +
-					" �����: " + housingOfficeSum.getText());
+
+			bufferedWriter.write("ЖКХ по тарифу: № р.с. " +  housingOfficeAccaunt.getText() +
+					" тариф: " + housingOfficeTariff.getText() +
+					" сумма: " + housingOfficeSum.getText());
 			bufferedWriter.newLine();
 			bufferedWriter.newLine();
-			
-			bufferedWriter.write("����� �����: " +  totalSum.getText());
-			
+
+			bufferedWriter.write("Общая сумма: " +  totalSum.getText());
+
 			bufferedWriter.flush();
 			bufferedWriter.close();
 		} catch (IOException e) {
