@@ -2,11 +2,8 @@
 
 <?import javafx.scene.text.*?>
 <?import javafx.scene.shape.*?>
-<?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="291.0" prefWidth="573.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="services.view.MainWindowController">
    <children>
@@ -236,11 +233,7 @@
          <font>
             <Font size="11.0" />
          </font></Label>
-      
-      
-      
-            
-      
+
       <Separator layoutX="11.0" layoutY="154.0" prefHeight="3.0" prefWidth="647.0" />
       <Separator layoutX="12.0" layoutY="217.0" prefHeight="3.0" prefWidth="647.0" />
       <Separator layoutX="12.0" layoutY="250.0" prefHeight="3.0" prefWidth="647.0" />

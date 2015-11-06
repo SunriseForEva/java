@@ -246,6 +246,7 @@ public class MainWindowController {
 					
 					MainWindowController.this.totalSum.setText(String.valueOf(totalSum));
 				}catch(NullPointerException | NumberFormatException e){
+					e.printStackTrace();
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setContentText("Показания счетчика, № счета \nи тариф (все виды услуг)" +
 							"\nнеобходимо вводить только цифры.");
