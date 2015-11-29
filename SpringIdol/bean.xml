@@ -5,6 +5,7 @@
 	default-init-method="turnOnLights" default-destroy-method="turnOffLights">
 	
 	<bean id="sax"  class="classes.Saxophone"/>	
+	<bean id="piano"  class="classes.Piano"/>	
 	<bean id="duke" class="classes.Juggler" scope="prototype" />
 	<bean id="sonnet29" class="classes.Sonnet29" />
 	<bean id="superDuke" class="classes.Juggler">
@@ -23,6 +24,13 @@
 	<bean id="kenny" class="classes.Instrumentalist">
 		<property name="age" value="25" />
 		<property name="song" value="Kenny the best android in the all world!!!" />
-		<property name="instrument" ref="sax"/>
+		<property name="instrument" ref = "piano"/>
 	</bean>
+	
+	<bean id="jenny" class="classes.Instrumentalist">
+		<property name="age" value="25" />
+		<property name="song" value="Kenny the best android in the all world!!!" />
+		<property name="instrument" ref = "piano"/>
+	</bean>
+	
 </beans>
