@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
-	default-init-method="turnOnLights" default-destroy-method="turnOffLights">
+	>
 	
-	<bean id="sax"  class="classes.Saxophone"/>	
-	<bean id="piano"  class="classes.Piano"/>	
-	<bean id="duke" class="classes.Juggler" scope="prototype" />
-	<bean id="sonnet29" class="classes.Sonnet29" />
-	<bean id="superDuke" class="classes.Juggler">
+	<bean id="sax"  class="classes.skills.Saxophone"/>	
+	<bean id="piano"  class="classes.skills.Piano"/>	
+	<bean id="duke" class="classes.participants.Juggler" scope="prototype" />
+	<bean id="sonnet29" class="classes.skills.Sonnet29" />
+	<bean id="superDuke" class="classes.participants.Juggler">
 		<constructor-arg value="15" />
 	</bean>
 
-	<bean id="poeticDuke" class="classes.PoeticJuggler">
+	<bean id="poeticDuke" class="classes.participants.PoeticJuggler">
 		<constructor-arg value="15" />
 		<constructor-arg ref="sonnet29" />
 	</bean>
@@ -21,16 +22,31 @@
 
 	<bean id="auditorium" class="classes.Auditorium" />
 
-	<bean id="kenny" class="classes.Instrumentalist">
+	<bean id="kenny" class="classes.participants.Instrumentalist">
 		<property name="age" value="25" />
 		<property name="song" value="Kenny the best android in the all world!!!" />
 		<property name="instrument" ref = "piano"/>
 	</bean>
 	
-	<bean id="jenny" class="classes.Instrumentalist">
+	<bean id="jenny" class="classes.participants.Instrumentalist">
 		<property name="age" value="25" />
 		<property name="song" value="Kenny the best android in the all world!!!" />
 		<property name="instrument" ref = "piano"/>
+	</bean>
+	
+	<bean id="fenny" class="classes.participants.Instrumentalist"
+			p:song = "Jingle Bells"
+			p:instrument-ref = "sax"
+	/>
+	
+	<bean id="hank" class="classes.participants.OneManBand">
+		<property name="instruments">
+			<list>
+				<ref bean="piano" />
+				<ref bean="sax" />
+				<ref bean="piano" />
+			</list>
+		</property>
 	</bean>
 	
 </beans>

@@ -3,14 +3,14 @@ package test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import classes.participants.PoeticJuggler;
+import interfaces.Performer;
 
-public class testPoeticJuggler {
+public class TestOneManBand {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("file:bean.xml");
-		PoeticJuggler poeticJuggler = (PoeticJuggler) ctx.getBean("poeticDuke");
-		poeticJuggler.perform();
+		Performer instrumentalist = (Performer) ctx.getBean("hank");
+		instrumentalist.perform();
 	}
 
 }
