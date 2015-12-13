@@ -1,7 +1,5 @@
 package TemperatureInTheHouse.view;
 
-import TemperatureInTheHouse.Main;
-import TemperatureInTheHouse.model.TemperatureInTheHouse;
 import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
@@ -14,14 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class MainWindowView {
-	private TemperatureInTheHouse temperature;
-	private Main main;
-	private static int ONE_HOUR = 60;
-	private static int ONE_DAY = 24;
-	boolean displayingOneHour;
-	boolean displayingOneDay;
-	boolean pause;
-
 	XYChart.Series<Number, Number> balcony2;
 	XYChart.Series<Number, Number> balcony1;
 	XYChart.Series<Number, Number> kitchen;
@@ -34,6 +24,20 @@ public class MainWindowView {
 	XYChart.Series<Number, Number> outerYard;
 
 	@FXML
+	final NumberAxis xAxisOut = new NumberAxis(0, 0, 0);
+	@FXML
+	final NumberAxis yAxisOut = new NumberAxis(0, 0, 0);
+	@FXML
+	final NumberAxis xAxisIn = new NumberAxis(0, 0, 0);
+	@FXML
+	final NumberAxis yAxisIn = new NumberAxis(0, 0, 0);
+
+	@FXML
+	private AreaChart<Number, Number> temperatureInside = new AreaChart<Number, Number>(xAxisIn, yAxisIn);
+	@FXML
+	private AreaChart<Number, Number> temperatureOutside = new AreaChart<Number, Number>(xAxisOut, yAxisOut);
+
+	@FXML
 	ImageView picture;
 	@FXML
 	private Label textFlow1;
@@ -43,6 +47,7 @@ public class MainWindowView {
 	private Label textFlow3;
 	@FXML
 	private Label textFlow4;
+
 	@FXML
 	private Label textFlow5;
 	@FXML
@@ -61,20 +66,6 @@ public class MainWindowView {
 	private Label labelPeriodDayThirdTab;
 	@FXML
 	private Label labelPeriodHourThirdTab;
-
-	@FXML
-	final NumberAxis xAxisOut = new NumberAxis(0, 0, 0);
-	@FXML
-	final NumberAxis yAxisOut = new NumberAxis(0, 0, 0);
-	@FXML
-	final NumberAxis xAxisIn = new NumberAxis(0, 0, 0);
-	@FXML
-	final NumberAxis yAxisIn = new NumberAxis(0, 0, 0);
-
-	@FXML
-	private AreaChart<Number, Number> temperatureInside = new AreaChart<Number, Number>(xAxisIn, yAxisIn);
-	@FXML
-	private AreaChart<Number, Number> temperatureOutside = new AreaChart<Number, Number>(xAxisOut, yAxisOut);;
 
 	@FXML
 	Tab secondTab;
@@ -131,52 +122,84 @@ public class MainWindowView {
 	@FXML
 	CheckBox temperatureInTheOuterYard = new CheckBox();
 
-	public TemperatureInTheHouse getTemperature() {
-		return temperature;
+	public XYChart.Series<Number, Number> getBalcony2() {
+		return balcony2;
 	}
 
-	public void setTemperature(TemperatureInTheHouse temperature) {
-		this.temperature = temperature;
+	public void setBalcony2(XYChart.Series<Number, Number> balcony2) {
+		this.balcony2 = balcony2;
 	}
 
-	public static int getONE_HOUR() {
-		return ONE_HOUR;
+	public XYChart.Series<Number, Number> getBalcony1() {
+		return balcony1;
 	}
 
-	public static void setONE_HOUR(int oNE_HOUR) {
-		ONE_HOUR = oNE_HOUR;
+	public void setBalcony1(XYChart.Series<Number, Number> balcony1) {
+		this.balcony1 = balcony1;
 	}
 
-	public static int getONE_DAY() {
-		return ONE_DAY;
+	public XYChart.Series<Number, Number> getKitchen() {
+		return kitchen;
 	}
 
-	public static void setONE_DAY(int oNE_DAY) {
-		ONE_DAY = oNE_DAY;
+	public void setKitchen(XYChart.Series<Number, Number> kitchen) {
+		this.kitchen = kitchen;
 	}
 
-	public boolean isDisplayingOneHour() {
-		return displayingOneHour;
+	public XYChart.Series<Number, Number> getChildroom() {
+		return childroom;
 	}
 
-	public void setDisplayingOneHour(boolean displayingOneHour) {
-		this.displayingOneHour = displayingOneHour;
+	public void setChildroom(XYChart.Series<Number, Number> childroom) {
+		this.childroom = childroom;
 	}
 
-	public boolean isDisplayingOneDay() {
-		return displayingOneDay;
+	public XYChart.Series<Number, Number> getHall() {
+		return hall;
 	}
 
-	public void setDisplayingOneDay(boolean displayingOneDay) {
-		this.displayingOneDay = displayingOneDay;
+	public void setHall(XYChart.Series<Number, Number> hall) {
+		this.hall = hall;
 	}
 
-	public boolean isPause() {
-		return pause;
+	public XYChart.Series<Number, Number> getBadroom() {
+		return badroom;
 	}
 
-	public void setPause(boolean pause) {
-		this.pause = pause;
+	public void setBadroom(XYChart.Series<Number, Number> badroom) {
+		this.badroom = badroom;
+	}
+
+	public XYChart.Series<Number, Number> getHallway() {
+		return hallway;
+	}
+
+	public void setHallway(XYChart.Series<Number, Number> hallway) {
+		this.hallway = hallway;
+	}
+
+	public XYChart.Series<Number, Number> getPantry() {
+		return pantry;
+	}
+
+	public void setPantry(XYChart.Series<Number, Number> pantry) {
+		this.pantry = pantry;
+	}
+
+	public XYChart.Series<Number, Number> getForest() {
+		return forest;
+	}
+
+	public void setForest(XYChart.Series<Number, Number> forest) {
+		this.forest = forest;
+	}
+
+	public XYChart.Series<Number, Number> getOuterYard() {
+		return outerYard;
+	}
+
+	public void setOuterYard(XYChart.Series<Number, Number> outerYard) {
+		this.outerYard = outerYard;
 	}
 
 	public NumberAxis getxAxisOut() {
@@ -193,6 +216,22 @@ public class MainWindowView {
 
 	public NumberAxis getyAxisIn() {
 		return yAxisIn;
+	}
+
+	public AreaChart<Number, Number> getTemperatureInside() {
+		return temperatureInside;
+	}
+
+	public void setTemperatureInside(AreaChart<Number, Number> temperatureInside) {
+		this.temperatureInside = temperatureInside;
+	}
+
+	public AreaChart<Number, Number> getTemperatureOutside() {
+		return temperatureOutside;
+	}
+
+	public void setTemperatureOutside(AreaChart<Number, Number> temperatureOutside) {
+		this.temperatureOutside = temperatureOutside;
 	}
 
 }

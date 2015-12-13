@@ -87,7 +87,7 @@
 					<content>
 						<Pane fx:id="paneForOutsideTeperature" prefHeight="200.0" prefWidth="200.0">
 							<children>
-								<AreaChart layoutX="90.0" layoutY="6.0" prefHeight="643.0" prefWidth="722.0">
+								<AreaChart fx:id="temperatureOutside" layoutX="90.0" layoutY="6.0" prefHeight="643.0" prefWidth="722.0">
 									<xAxis>
 										<NumberAxis side="BOTTOM" fx:id="xAxisOut" />
 									</xAxis>
@@ -136,7 +136,7 @@
 					<content>
 						<Pane fx:id="paneForInsideTeperature" prefHeight="699.0" prefWidth="812.0">
 							<children>
-								<AreaChart layoutX="90.0" layoutY="6.0" prefHeight="643.0" prefWidth="722.0">
+								<AreaChart fx:id="temperatureInside" layoutX="90.0" layoutY="6.0" prefHeight="643.0" prefWidth="722.0">
 									<xAxis>
 										<NumberAxis side="BOTTOM" fx:id="xAxisIn" />
 									</xAxis>
@@ -188,7 +188,7 @@
 								<Button fx:id="oneDayThirdTab" layoutX="17.0" layoutY="568.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="24 hours" />
 								<Button fx:id="forwardThirdTab" layoutX="70.0" layoutY="504.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="&gt;" />
 								<Button fx:id="pauseThirdTab" layoutX="40.0" layoutY="504.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="II" />
-								<Button fx:id="backwardThirdTab" layoutX="11.0" layoutY="504.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="&lt;" wrapText="true" />
+								<Button fx:id="backwardThirdTab" layoutX="11.0" layoutY="504.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="f" wrapText="true" />
 							</children>
 						</Pane>
 					</content>
