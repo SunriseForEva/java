@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+//класс очень сырой требует доработки
+
 public class CreateConnectionDB extends Thread {
 
 	boolean connectionIsComplete = false;
