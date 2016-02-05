@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-//класс очень сырой требует доработки
+//класс очень сырой требует доработки, не судите строго))
 
 public class CreateConnectionDB extends Thread {
 
