@@ -138,8 +138,7 @@ public class CreateConnectionDB extends Thread {
 		nextDate.setHours(currentHour);
 		nextDate.setMinutes(59);
 		nextDate.setSeconds(59);
-
-		currentHourData = new ArrayList<TemperatureInTheHouse>(60);
+		currentHourData.clear();
 
 		for (int i = 0; i < monthData.size(); i++) {
 			if (monthData.get(i).getCurrentDate().compareTo(prevDate) > 0 && monthData.get(i).getCurrentDate().compareTo(nextDate) < 0) {
@@ -178,7 +177,7 @@ public class CreateConnectionDB extends Thread {
 
 		ResultSet rsLastRec;
 		try {
-			monthData = new ArrayList<TemperatureInTheHouse>();
+			monthData.clear();
 			rsLastRec = stmt.executeQuery(getCurrentHour);
 			getDataFromRequest(rsLastRec, monthData);
 		} catch (SQLException e) {
@@ -198,7 +197,7 @@ public class CreateConnectionDB extends Thread {
 		currDate.setMinutes(59);
 		currDate.setSeconds(59);
 
-		currentHourData = new ArrayList<TemperatureInTheHouse>(60);
+		currentHourData.clear();
 
 		for (TemperatureInTheHouse temperatureInTheHouse : monthData) {
 			if (prevDate.compareTo(temperatureInTheHouse.getCurrentDate()) == -1 && currDate.compareTo(temperatureInTheHouse.getCurrentDate()) == 1) {
@@ -229,7 +228,7 @@ public class CreateConnectionDB extends Thread {
 			Date nextMonth = new Date(currentDay.getTime());
 			nextMonth.setDate(currentDay.getDate() - 1);
 
-			monthData = new ArrayList<TemperatureInTheHouse>();
+			monthData.clear();
 			setMonthData(nextMonth);
 
 		}
@@ -246,7 +245,7 @@ public class CreateConnectionDB extends Thread {
 		currDate.setMinutes(59);
 		currDate.setSeconds(59);
 
-		currentDayData = new ArrayList<TemperatureInTheHouse>(144);
+		currentDayData.clear();
 
 		for (int i = 0; i < monthData.size(); i += 60) {
 			if (prevDate.compareTo(monthData.get(i).getCurrentDate()) == -1 && currDate.compareTo(monthData.get(i).getCurrentDate()) == 1) {
@@ -280,7 +279,7 @@ public class CreateConnectionDB extends Thread {
 		currDate.setMinutes(59);
 		currDate.setSeconds(59);
 
-		currentDayData = new ArrayList<TemperatureInTheHouse>(24);
+		currentDayData.clear();
 
 		for (int i = 0; i < monthData.size(); i += 60) {
 			if (prevDate.compareTo(monthData.get(i).getCurrentDate()) == -1 && currDate.compareTo(monthData.get(i).getCurrentDate()) == 1) {
@@ -311,9 +310,7 @@ public class CreateConnectionDB extends Thread {
 		currDate.setMinutes(59);
 		currDate.setSeconds(59);
 
-		currentHourData = new ArrayList<TemperatureInTheHouse>(60);
-
-		// currentHourData.get(0).getCurrentDate().get
+		currentHourData.clear();
 
 		for (TemperatureInTheHouse temperatureInTheHouse : monthData) {
 			if (prevDate.compareTo(temperatureInTheHouse.getCurrentDate()) == -1 && currDate.compareTo(temperatureInTheHouse.getCurrentDate()) == 1) {
