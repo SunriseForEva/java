@@ -1,7 +1,7 @@
 package ua.yaroslav.gnatyuk.classes;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Yarik on 17.06.2015.
@@ -43,7 +43,7 @@ public class TemperatureInTheHouse {
 	 * ��� 3 - ������2 4 - ������� 5 - ����(�������) 6 - ����� 7 - ���� 8 - ���
 	 * 9 - ���� 10 - �������� 11 - ������� ����� � ����
 	 */
-	public TemperatureInTheHouse(ArrayList<Object> t) {
+	public TemperatureInTheHouse(List<Object> t) {
 		this.balcony_1 = (Float) t.get(0);
 		this.badRoom = (Float) t.get(1);
 		this.hall = (Float) t.get(2);
@@ -75,7 +75,7 @@ public class TemperatureInTheHouse {
 		water = 0;
 	}
 
-	public void setAllTemperature(ArrayList<Float> temperature) {
+	public void setAllTemperature(List<Float> temperature) {
 		this.setBalcony_1(temperature.get(0));
 		this.setBadRoom(temperature.get(1));
 		this.setHall(temperature.get(2));
