@@ -1,6 +1,5 @@
 package ua.gnatyuk.yaroslav.controllers;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -15,13 +14,13 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
-import ua.gnatyuk.yaroslav.classes.CreateConnectionDB;
+import ua.gnatyuk.yaroslav.classes.ReadDataFromSQL;
 import ua.gnatyuk.yaroslav.classes.TemperatureInTheHouse;
 import ua.gnatyuk.yaroslav.classes.User;
 
 @Controller
 public class Controllers {
-	CreateConnectionDB connectionDB;
+	ReadDataFromSQL data;
 	TemperatureInTheHouse lastData;
 
 	private static final Logger logger = LoggerFactory.getLogger(Controllers.class);
@@ -36,23 +35,15 @@ public class Controllers {
 
 	@RequestMapping(value = "/main-window", method = RequestMethod.POST)
 	public ModelAndView checkUser(@ModelAttribute("user") User user) {
-
-		try {
-			connectionDB = CreateConnectionDB.getInstance(user.getName(), user.getPassword());
-			connectionDB.setLastRecord();
-			lastData = connectionDB.getLastRecord();
-
-			connectionDB.start();
-
-			return new ModelAndView("main", "user", user).addObject("lastData", lastData).addObject("date", lastData.getCurrentDate());
-		} catch (SQLException e) {
-			return new ModelAndView("login");
-		}
+		data = new ReadDataFromSQL();
+		data.setFirstAndLastRec();
+		data.setCurrentDay();
+		return new ModelAndView("main", "user", user).addObject("lastData", data.getLastRec()).addObject("date", data.getLastRec().getCurrentDate());
 	}
 
 	@RequestMapping(value = "/main-window", method = RequestMethod.GET)
 	public ModelAndView mainWindow(@ModelAttribute("user") User user) {
-		return new ModelAndView("main", "user", user).addObject("lastData", lastData).addObject("date", lastData.getCurrentDate());
+		return new ModelAndView("main", "user", user).addObject("lastData", data.getLastRec()).addObject("date", data.getLastRec().getCurrentDate());
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -64,13 +55,14 @@ public class Controllers {
 	public ModelAndView chartInside(HttpSession session) {
 
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
+		data.setCurentHourAndDate(data.getCurrentDate());
 
-		List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
-		List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
+		List<TemperatureInTheHouse> day = data.getCurrentDayData();
+		List<TemperatureInTheHouse> hour = data.getCurrentHourData();
 
 		ModelAndView inside = new ModelAndView("chart-inside");
-		inside.addObject("currentHour", connectionDB.getCurrentHour());
-		inside.addObject("currentDate", connectionDB.getCurrentDay());
+		inside.addObject("currentHour", data.getCurrentDate().getHours());
+		inside.addObject("currentDate", data.getCurrentDate());
 		inside.addObject("day", day);
 		inside.addObject("hour", hour);
 
@@ -84,18 +76,16 @@ public class Controllers {
 
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 
-		connectionDB.getPreviousHour(connectionDB.getCurrentHour());
-		List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
-		List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
-
-		System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
+		data.setPrevHour(data.getCurrentDate());
+		List<TemperatureInTheHouse> hour = data.getCurrentHourData();
+		List<TemperatureInTheHouse> day = data.getCurrentDayData();
 
 		ModelAndView inside = new ModelAndView("chart-inside");
 
 		inside.addObject("hour", hour);
 		inside.addObject("day", day);
-		inside.addObject("currentHour", connectionDB.getCurrentHour());
-		inside.addObject("currentDate", connectionDB.getCurrentDay());
+		inside.addObject("currentHour", data.getCurrentDate().getHours());
+		inside.addObject("currentDate", data.getCurrentDate());
 
 		System.gc();
 
@@ -107,39 +97,19 @@ public class Controllers {
 
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 
-		if (!connectionDB.isLastHour(connectionDB.getCurrentHour())) {
-			connectionDB.getNextHour(connectionDB.getCurrentHour());
-			List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
-			List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
+		data.setNextHour(data.getCurrentDate());
+		List<TemperatureInTheHouse> hour = data.getCurrentHourData();
+		List<TemperatureInTheHouse> day = data.getCurrentDayData();
 
-			System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
+		ModelAndView inside = new ModelAndView("chart-inside");
+		inside.addObject("hour", hour);
+		inside.addObject("day", day);
+		inside.addObject("currentHour", data.getCurrentDate().getHours());
+		inside.addObject("currentDate", data.getCurrentDate());
 
-			ModelAndView inside = new ModelAndView("chart-inside");
-			inside.addObject("hour", hour);
-			inside.addObject("day", day);
-			inside.addObject("currentHour", connectionDB.getCurrentHour());
-			inside.addObject("currentDate", connectionDB.getCurrentDay());
+		System.gc();
 
-			System.gc();
-
-			return inside;
-		} else {
-			List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
-			List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
-
-			System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
-
-			ModelAndView inside = new ModelAndView("chart-inside");
-			inside.addObject("hour", hour);
-			inside.addObject("day", day);
-			inside.addObject("currentHour", connectionDB.getCurrentHour());
-			inside.addObject("currentDate", connectionDB.getCurrentDay());
-
-			System.gc();
-
-			return inside;
-
-		}
+		return inside;
 	}
 
 	@RequestMapping(value = "/chart-inside-prev-day", method = RequestMethod.GET)
@@ -147,18 +117,16 @@ public class Controllers {
 
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 
-		connectionDB.getPreviousDay(connectionDB.getCurrentDay());
-		List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
-		List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
-
-		System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
+		data.setPrevDay(data.getCurrentDate());
+		List<TemperatureInTheHouse> hour = data.getCurrentHourData();
+		List<TemperatureInTheHouse> day = data.getCurrentDayData();
 
 		ModelAndView inside = new ModelAndView("chart-inside");
 
 		inside.addObject("hour", hour);
 		inside.addObject("day", day);
-		inside.addObject("currentHour", connectionDB.getCurrentHour());
-		inside.addObject("currentDate", connectionDB.getCurrentDay());
+		inside.addObject("currentHour", data.getCurrentDate().getHours());
+		inside.addObject("currentDate", data.getCurrentDate());
 
 		System.gc();
 
@@ -170,39 +138,19 @@ public class Controllers {
 
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 
-		if (!connectionDB.isLastDay(connectionDB.getCurrentDay())) {
-			connectionDB.getNextDay(connectionDB.getCurrentDay());
-			List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
-			List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
+		data.setNextDay(data.getCurrentDate());
+		List<TemperatureInTheHouse> hour = data.getCurrentHourData();
+		List<TemperatureInTheHouse> day = data.getCurrentDayData();
 
-			System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
+		ModelAndView inside = new ModelAndView("chart-inside");
+		inside.addObject("hour", hour);
+		inside.addObject("day", day);
+		inside.addObject("currentHour", data.getCurrentDate().getHours());
+		inside.addObject("currentDate", data.getCurrentDate());
 
-			ModelAndView inside = new ModelAndView("chart-inside");
-			inside.addObject("hour", hour);
-			inside.addObject("day", day);
-			inside.addObject("currentHour", connectionDB.getCurrentHour());
-			inside.addObject("currentDate", connectionDB.getCurrentDay());
+		System.gc();
 
-			System.gc();
-
-			return inside;
-		} else {
-			List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
-			List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
-
-			System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
-
-			ModelAndView inside = new ModelAndView("chart-inside");
-			inside.addObject("hour", hour);
-			inside.addObject("day", day);
-			inside.addObject("currentHour", connectionDB.getCurrentHour());
-			inside.addObject("currentDate", connectionDB.getCurrentDay());
-
-			System.gc();
-
-			return inside;
-
-		}
+		return inside;
 	}
 
 	@RequestMapping(value = "/chart-outside", method = RequestMethod.GET)
@@ -210,13 +158,16 @@ public class Controllers {
 
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 
-		List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
-		List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
+		data.setNextHour(data.getCurrentDate());
+		data.setNextDay(data.getCurrentDate());
+
+		List<TemperatureInTheHouse> day = data.getCurrentDayData();
+		List<TemperatureInTheHouse> hour = data.getCurrentHourData();
 
 		ModelAndView outside = new ModelAndView("chart-outside");
 
-		outside.addObject("currentHour", connectionDB.getCurrentHour());
-		outside.addObject("currentDate", connectionDB.getCurrentDay());
+		outside.addObject("currentHour", data.getCurrentDate().getHours());
+		outside.addObject("currentDate", data.getCurrentDate());
 		outside.addObject("day", day);
 		outside.addObject("hour", hour);
 
@@ -230,18 +181,16 @@ public class Controllers {
 
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 
-		connectionDB.getPreviousHour(connectionDB.getCurrentHour());
-		List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
-		List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
-
-		System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
+		data.setPrevHour(data.getCurrentDate());
+		List<TemperatureInTheHouse> hour = data.getCurrentHourData();
+		List<TemperatureInTheHouse> day = data.getCurrentDayData();
 
 		ModelAndView outside = new ModelAndView("chart-outside");
 
-		outside.addObject("currentHour", connectionDB.getCurrentHour());
-		outside.addObject("currentDate", connectionDB.getCurrentDay());
-		outside.addObject("hour", hour);
+		outside.addObject("currentHour", data.getCurrentDate().getHours());
+		outside.addObject("currentDate", data.getCurrentDate());
 		outside.addObject("day", day);
+		outside.addObject("hour", hour);
 
 		System.gc();
 
@@ -253,42 +202,21 @@ public class Controllers {
 
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 
-		if (!connectionDB.isLastHour(connectionDB.getCurrentHour())) {
-			connectionDB.getNextHour(connectionDB.getCurrentHour());
-			List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
+		data.setNextHour(data.getCurrentDate());
+		List<TemperatureInTheHouse> hour = data.getCurrentHourData();
 
-			List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
+		List<TemperatureInTheHouse> day = data.getCurrentDayData();
 
-			System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
+		ModelAndView outside = new ModelAndView("chart-outside");
 
-			ModelAndView outside = new ModelAndView("chart-outside");
+		outside.addObject("currentHour", data.getCurrentDate().getHours());
+		outside.addObject("currentDate", data.getCurrentDate());
+		outside.addObject("day", day);
+		outside.addObject("hour", hour);
 
-			outside.addObject("currentHour", connectionDB.getCurrentHour());
-			outside.addObject("currentDate", connectionDB.getCurrentDay());
-			outside.addObject("hour", hour);
-			outside.addObject("day", day);
+		System.gc();
 
-			System.gc();
-
-			return outside;
-		} else {
-			List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
-			List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
-
-			System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
-
-			ModelAndView outside = new ModelAndView("chart-outside");
-
-			outside.addObject("currentHour", connectionDB.getCurrentHour());
-			outside.addObject("currentDate", connectionDB.getCurrentDay());
-			outside.addObject("hour", hour);
-			outside.addObject("day", day);
-
-			System.gc();
-
-			return outside;
-
-		}
+		return outside;
 	}
 
 	@RequestMapping(value = "/chart-outside-prev-day", method = RequestMethod.GET)
@@ -296,19 +224,16 @@ public class Controllers {
 
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 
-		connectionDB.getPreviousDay(connectionDB.getCurrentDay());
-		List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
-		List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
-
-		System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
+		data.setPrevDay(data.getCurrentDate());
+		List<TemperatureInTheHouse> hour = data.getCurrentHourData();
+		List<TemperatureInTheHouse> day = data.getCurrentDayData();
 
 		ModelAndView outside = new ModelAndView("chart-outside");
 
-		outside.addObject("currentHour", connectionDB.getCurrentHour());
-		outside.addObject("currentDate", connectionDB.getCurrentDay());
-		outside.addObject("hour", hour);
+		outside.addObject("currentHour", data.getCurrentDate().getHours());
+		outside.addObject("currentDate", data.getCurrentDate());
 		outside.addObject("day", day);
-
+		outside.addObject("hour", hour);
 		System.gc();
 
 		return outside;
@@ -319,41 +244,20 @@ public class Controllers {
 
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 
-		if (!connectionDB.isLastDay(connectionDB.getCurrentDay())) {
-			connectionDB.getNextDay(connectionDB.getCurrentDay());
-			List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
+		data.setNextDay(data.getCurrentDate());
+		List<TemperatureInTheHouse> hour = data.getCurrentHourData();
 
-			List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
+		List<TemperatureInTheHouse> day = data.getCurrentDayData();
 
-			System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
+		ModelAndView outside = new ModelAndView("chart-outside");
 
-			ModelAndView outside = new ModelAndView("chart-outside");
+		outside.addObject("currentHour", data.getCurrentDate().getHours());
+		outside.addObject("currentDate", data.getCurrentDate());
+		outside.addObject("day", day);
+		outside.addObject("hour", hour);
 
-			outside.addObject("currentHour", connectionDB.getCurrentHour());
-			outside.addObject("currentDate", connectionDB.getCurrentDay());
-			outside.addObject("hour", hour);
-			outside.addObject("day", day);
+		System.gc();
 
-			System.gc();
-
-			return outside;
-		} else {
-			List<TemperatureInTheHouse> hour = connectionDB.getCurrentHourData();
-			List<TemperatureInTheHouse> day = connectionDB.getCurrentDayData();
-
-			System.out.println("hour: " + connectionDB.getCurrentHour() + "date: " + connectionDB.getCurrentDay() + " total records: " + connectionDB.getCurrentHourData().size());
-
-			ModelAndView outside = new ModelAndView("chart-outside");
-
-			outside.addObject("currentHour", connectionDB.getCurrentHour());
-			outside.addObject("currentDate", connectionDB.getCurrentDay());
-			outside.addObject("hour", hour);
-			outside.addObject("day", day);
-
-			System.gc();
-
-			return outside;
-
-		}
+		return outside;
 	}
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="ua.gnatyuk.yaroslav.classes.TemperatureInTheHouse" table="housestemperatures">
+		<meta attribute="class-description">
+			This class contains the temperatures.
+		</meta>
+
+		<id name="currentDate" type="timestamp" column="currentTime">
+			<generator class="native" />
+		</id>
+		
+		<property name = "id" column ="id" type="int"/>
+		<property name = "hall" column="t_mainRoom" type="float"/>
+		<property name = "childRoom" column="t_childrenroom" type="float" />
+		<property name = "kitchen" column="t_kitchen" type="float" />
+		<property name = "badRoom" column="t_bedRoom" type="float" />
+		<property name = "hallWay" column="t_hall" type="float" />
+		<property name = "pantry" column="t_pantry" type="float" />
+		<property name = "balcony_1" column="t_balconyWest" type="float" />
+		<property name = "balcony_2" column="t_balconyEast" type="float" />
+		<property name = "outerForest" column="t_outerForest" type="float" />
+		<property name = "outerYard" column="t_outerYard" type="float" />
+		<property name = "water" column="t_water" type="float" />
+	</class>
+</hibernate-mapping>
